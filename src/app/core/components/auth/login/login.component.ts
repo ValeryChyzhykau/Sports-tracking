@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.controls.userPassword.value,
       };
       this.store$.dispatch(new LogIn(payload));
-      this.store$.dispatch(new LoginRedirect());
     } catch (err) {
       alert(err);
     }

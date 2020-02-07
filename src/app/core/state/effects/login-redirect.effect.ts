@@ -10,7 +10,23 @@ export class LoginRedirectEffect {
   public loginRedirect: any = this.actions$.pipe(
     ofType(AuthActionTypes.LoginRedirect),
     tap(() => {
-      this.router.navigate(["/home"]);
+      this.router.navigate(['/login']);
+    }),
+  );
+
+  @Effect({dispatch: false})
+  public homeRedirect: any = this.actions$.pipe(
+    ofType(AuthActionTypes.HomeRedirect),
+    tap(() => {
+      this.router.navigate(['/home']);
+    }),
+  );
+
+  @Effect({dispatch: false})
+  public loginSuccess: any = this.actions$.pipe(
+    ofType(AuthActionTypes.LoginSuccess),
+    tap(() => {
+      this.router.navigate(['/home']);
     }),
   );
 

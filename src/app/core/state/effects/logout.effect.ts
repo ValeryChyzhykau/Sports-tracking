@@ -10,12 +10,9 @@ export class LogoutEffect {
   @Effect({ dispatch: false })
   public logout$: any = this.actions$.pipe(
       ofType(AuthActionTypes.Logout),
-      tap(() => {
-          this.authService.logout().pipe(
-              map(() => this.router.navigate(['/login'])),
-          );
-      }),
-  );
+      tap(() =>
+      this.authService.logout()),
+  ).pipe(map(() => this.router.navigate(['/login'])));
 constructor(
     private actions$: Actions,
     private router: Router,

@@ -19,6 +19,7 @@ import { SharedModule } from './shared.module';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { en_US, NZ_I18N } from 'ng-zorro-antd';
+import { CheckAuthGuard } from '../core/guards/check-auth.guard';
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -28,7 +29,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
 );
 registerLocaleData(en);
 
-const routes: Routes = [{ path: '', component: LoginComponent },
+const routes: Routes = [{ path: '', component: LoginComponent, canActivate: [CheckAuthGuard] },
 ];
 
 @NgModule({

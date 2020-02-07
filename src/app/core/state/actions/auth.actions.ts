@@ -7,8 +7,13 @@ export enum AuthActionTypes {
   Logout = '[Auth] Logout',
   LoginRedirect = '[Auth] Login Redirect',
   SignUp = '[Auth] Sign Up',
-  SignUpSuccess = '[Auth] Sign Up',
-  SignUpFailure = '[Auth] Sign Up',
+  SignUpSuccess = '[Auth] Sign Up Success',
+  SignUpFailure = '[Auth] Sign Up Failure',
+  HomeRedirect = '[Auth] Home Redirect',
+}
+
+export class HomeRedirect implements Action {
+  public readonly type: AuthActionTypes.HomeRedirect = AuthActionTypes.HomeRedirect;
 }
 
 export class LogIn implements Action {
