@@ -1,21 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AuthService } from '../../services/auth.service';
-import { LogOut } from '../../state/actions/auth.actions';
-import { AuthState } from '../../state/reducers/auth.reducers';
+import { LoadAdmin } from '../../state/actions/admin.actions';
+import { StateAdmin } from '../../state/reducers/admin.reducers';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-
-  constructor(public store: Store<AuthState>, public service: AuthService) { }
-  test () {
-     this.store.dispatch(new LogOut());
+  constructor(private storeAdmin$: Store<StateAdmin>) {}
+  public  ngOnInit(): void {
+    this.storeAdmin$.dispatch(new LoadAdmin());
   }
-  ngOnInit() {
-  }
-
 }

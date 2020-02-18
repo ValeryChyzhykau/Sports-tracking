@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LoginRedirect, HomeRedirect } from '../state/actions/auth.actions';
 import { AuthState } from '../state/reducers/auth.reducers';
 import { selectAuthEvents } from '../state/selectors/auth.selectors';
 
@@ -11,16 +10,15 @@ import { selectAuthEvents } from '../state/selectors/auth.selectors';
   providedIn: 'root',
 })
 export class CheckAuthGuard implements CanActivate {
-  constructor(private store$: Store<AuthState>) {}
+  constructor(private store$: Store<AuthState>, private router: Router) {}
   public canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
      return this.store$.pipe(
       select(selectAuthEvents),
       map((auth) => {
-        console.log(auth);
         if (auth) {
-          this.store$.dispatch( new HomeRedirect());
+          this.router.navigate(['/home']);
           return false;
         }
         return true;

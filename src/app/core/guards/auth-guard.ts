@@ -9,7 +9,6 @@ import {
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {  LoginRedirect } from '../state/actions/auth.actions';
 import { AuthState } from '../state/reducers/auth.reducers';
 import { selectAuthEvents } from '../state/selectors/auth.selectors';
 
@@ -29,9 +28,9 @@ export class AuthGuard implements CanActivate {
     return this.store$.pipe(
       select(selectAuthEvents),
       map((auth) => {
-        console.log(auth);
         if (!auth) {
-         this.store$.dispatch( new LoginRedirect());
+          this.router.navigate(['/login']);
+          return false;
         }
         return true;
       }),

@@ -5,8 +5,24 @@ import { authState } from '../reducers/auth.reducers';
 export const selectAuthFeature = createFeatureSelector<AuthState>(
     authState,
 );
+export const selectAuthEmailFeature = createFeatureSelector<AuthState>(
+    authState,
+);
+export const selectAuthIdFeature = createFeatureSelector<AuthState>(
+    authState,
+);
 
 export const selectAuthEvents = createSelector(
     selectAuthFeature,
-    (state: AuthState): boolean => state.isAuthenticated,
+    (state: AuthState): any => state.user,
+);
+
+export const selectAuthEmailEvents = createSelector(
+    selectAuthEmailFeature,
+    (state: AuthState): string => state.email,
+);
+
+export const selectAuthIdEvents = createSelector(
+    selectAuthIdFeature,
+    (state: AuthState): string => state.id,
 );

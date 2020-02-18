@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Unsubscribe } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,20 +14,20 @@ export class AuthService {
     userName: string,
     login: string,
     phone: number,
-  ): Observable<any> {
+  ): Observable<void> {
     try {
-      return this.fromFirebaseAuthPromise(
+      return from(
         this.afAuth.auth
           .createUserWithEmailAndPassword(email, password)
           .then((res: any) => {
             return this.db
-              .collection("users")
+              .collection('users')
               .doc(res.user.uid)
               .set({
                 email,
+                phone,
                 userName,
                 login,
-                phone,
               });
           }),
       );
@@ -35,18 +36,27 @@ export class AuthService {
     }
   }
   public login(email: string, password: string): Observable<any> {
-    return this.fromFirebaseAuthPromise(
-      this.afAuth.auth.signInWithEmailAndPassword(email, password),
-    );
+    try {
+      return from(
+        this.afAuth.auth.signInWithEmailAndPassword(email, password),
+      );
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
-  public logout(): Observable<any> {
-    return this.fromFirebaseAuthPromise(this.afAuth.auth.signOut());
+  public logout(): Observable<void> {
+    try {
+      return from(this.afAuth.auth.signOut());
+    } catch (err) {
+      alert (err.message);
+    }
   }
 
   public checkStatus(): Observable<boolean> {
+    try {
     return this.afAuth.authState.pipe(
-      map((data) => {
+      map((data: firebase.User) => {
         if (data !== undefined && data !== null) {
           return true;
         } else {
@@ -54,18 +64,19 @@ export class AuthService {
         }
       }),
     );
+    } catch (err) {
+      alert(err.message);
+    }
   }
-  private fromFirebaseAuthPromise(promise: Promise<any>): Observable<any> {
-    return from(promise as Promise<any>);
+  public getToken(): Unsubscribe {
+    try {
+    return this.afAuth.auth.onAuthStateChanged((user: firebase.User) => {
+      user.getIdTokenResult(true).then((res: firebase.auth.IdTokenResult) => {
+        localStorage.setItem('userToken', JSON.stringify(res.token));
+      });
+    });
+  } catch (err) {
+    alert(err.message);
   }
 }
-
-// CheckAdminStatus: boolean;
-// this.service.checkStatus().onAuthStateChanged((user) => {
-//   if (user) {
-//     user.getIdTokenResult().then( (token) => {
-//       this.checkAdminStatus = token.claims.admin;
-//       console.log(this.checkAdminStatus);
-//     });
-//   }
-// });
+}

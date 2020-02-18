@@ -17,9 +17,9 @@ export class SignUpEffect {
         return this.authService.signUp(
           auth.email,
           auth.password,
+          auth.userName,
           auth.login,
           auth.phone,
-          auth.userName,
         );
       }),
     )

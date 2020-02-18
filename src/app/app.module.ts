@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { effects } from '@core/state/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+// import { environment } from '@src/environments/environment';
 import { en_US, NgZorroAntdModule, NZ_I18N } from 'ng-zorro-antd';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { metaReducers, reducers } from './core/state/reducers';
 import { AuthModule } from './modules/auth.module';
 import { CoreModule } from './modules/core.module';
 import { HomeModule } from './modules/home.module';
+// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 registerLocaleData(en);
 
@@ -23,8 +25,6 @@ registerLocaleData(en);
     AppComponent,
   ],
   imports: [
-    StoreModule,
-    EffectsModule,
     BrowserModule,
     AppRoutingModule,
     HomeModule,
@@ -41,6 +41,7 @@ registerLocaleData(en);
       },
     }),
     EffectsModule.forRoot(effects),
+    // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],

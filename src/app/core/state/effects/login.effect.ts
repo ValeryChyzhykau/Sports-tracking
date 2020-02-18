@@ -17,8 +17,9 @@ export class LoginEffects {
         .pipe(
           map((authState) => {
             return new LogInSuccess({
-              email: authState.user.email,
-              password: authState.user.password,
+              token: this.authService.getToken(),
+              email: localStorage.setItem('userEmail', authState.user.email),
+              id: localStorage.setItem('userId', authState.user.uid),
             });
           }),
           catchError((error) => of(new LogInFailure(error))),
@@ -26,5 +27,5 @@ export class LoginEffects {
     }),
   );
 
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(private actions$: Actions, private authService: AuthService ) {}
 }

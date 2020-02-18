@@ -1,2 +1,7 @@
-<button (click)="test()">Return on login</button>
-<a [routerLink]="['/login']" routerLinkActive="router-link-active" > test return login</a>
+
+<app-header class="header"></app-header>
+<a [routerLink]="['/home']" routerLinkActive="router-link-active" > home</a>
+<span>---///---</span>
+<a [routerLink]="['/home/content']" routerLinkActive="router-link-active" > Content</a>
+
+<router-outlet></router-outlet>
