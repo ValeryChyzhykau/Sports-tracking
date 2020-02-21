@@ -1,31 +1,37 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthState } from '../state/reducers/auth.reducers';
+import { StateUser } from '../state/reducers/user.reducers';
 import { selectAuthIdEvents } from '../state/selectors/auth.selectors';
+import { selectGym } from '../state/selectors/user.selectors';
 
 @Injectable()
 export class UserService {
   public userId: Observable<string> = this.store$.pipe(
     select(selectAuthIdEvents),
   );
-  constructor(private db: AngularFirestore, private store$: Store<AuthState>) {}
+  public selectedGym: Observable<any> = this.storeUser$.pipe(select(selectGym));
+
+  constructor(private db: AngularFirestore, private store$: Store<AuthState>, private storeUser$: Store<StateUser>,
+    ) {}
 
   public getReservation(): Observable<void> {
     try {
-      let resp: string;
-      this.userId.subscribe((res: string) => (resp = res));
       return this.db
-        .collection(`/reservations`)
-        .doc(resp)
+        .collection(`reservations`)
         .snapshotChanges()
         .pipe(
-          map((actions: { payload: { id: string; data: any } }) => {
-            const data = actions.payload.data();
-            const id = actions.payload.id;
-            return { id, ...data };
+          map((actions: any) => {
+            return actions.map((a: { payload: { doc: { data: () => any; id: string; }; }; }) => {
+              const data = a.payload.doc.data() as any;
+              console.log(data);
+              const id = a.payload.doc.id;
+              console.log(id);
+              return { id, ...data };
+            });
           }),
         );
     } catch (err) {
@@ -40,15 +46,23 @@ export class UserService {
     paymentAmount: number,
     numberOfPeople: number,
     gym: string,
-  ): Observable<Promise<void>> {
+  ): Observable<Promise<DocumentReference>> {
     try {
+      let maximumNumberOfPeople: number;
+      let price: number;
+      this.selectedGym.subscribe((res: any) => {
+        price = res.price;
+        maximumNumberOfPeople = res.maximumNumberOfPeople;
+      });
       let resp: string;
       this.userId.subscribe((res: string) => (resp = res));
       return of(
         this.db
           .collection(`/reservations`)
-          .doc(resp)
-          .set({
+          .add({
+            maximumNumberOfPeople,
+            pricePerHour: price,
+            idUser: resp,
             reservationDate,
             from,
             to,
@@ -66,7 +80,7 @@ export class UserService {
     try {
       return of(
         this.db
-          .collection("/reservations")
+          .collection(`/reservations`)
           .doc(id)
           .delete(),
       );

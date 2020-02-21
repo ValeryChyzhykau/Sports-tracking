@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AuthService } from '@src/app/core/services/auth.service';
 import { LogIn, SignUp } from '@src/app/core/state/actions/auth.actions';
 import { AuthState } from '@src/app/core/state/reducers/auth.reducers';
 
@@ -18,11 +17,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private store$: Store<AuthState>,
     private fb: FormBuilder,
-    private authService: AuthService,
   ) {}
   public submit(): void {
     try {
-      // this.authService.login('r@r.ru', '123456');
       const payload = {
         email: this.loginForm.controls.userEmail.value,
         password: this.loginForm.controls.userPassword.value,

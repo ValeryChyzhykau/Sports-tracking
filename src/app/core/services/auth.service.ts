@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { Unsubscribe } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {}
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore, private router: Router) {}
   public signUp(
     email: string,
     password: string,
@@ -47,6 +48,8 @@ export class AuthService {
 
   public logout(): Observable<void> {
     try {
+      localStorage.clear();
+      this.router.navigate(["/login"]);
       return from(this.afAuth.auth.signOut());
     } catch (err) {
       alert (err.message);
@@ -57,6 +60,7 @@ export class AuthService {
     try {
     return this.afAuth.authState.pipe(
       map((data: firebase.User) => {
+        console.log(data);
         if (data !== undefined && data !== null) {
           return true;
         } else {
@@ -73,6 +77,7 @@ export class AuthService {
     return this.afAuth.auth.onAuthStateChanged((user: firebase.User) => {
       user.getIdTokenResult(true).then((res: firebase.auth.IdTokenResult) => {
         localStorage.setItem('userToken', JSON.stringify(res.token));
+        return res.token;
       });
     });
   } catch (err) {

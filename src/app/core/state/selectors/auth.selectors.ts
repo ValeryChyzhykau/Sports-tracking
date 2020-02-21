@@ -17,11 +17,6 @@ export const selectAuthEvents = createSelector(
     (state: AuthState): any => state.user,
 );
 
-export const selectAuthEmailEvents = createSelector(
-    selectAuthEmailFeature,
-    (state: AuthState): string => state.email,
-);
-
 export const selectAuthIdEvents = createSelector(
     selectAuthIdFeature,
     (state: AuthState): string => state.id,

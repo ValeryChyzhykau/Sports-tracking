@@ -11,7 +11,7 @@ export class LoginRedirectEffect {
   public loginSuccess: any = this.actions$.pipe(
     ofType(AuthActionTypes.LoginSuccess),
     tap(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     }),
   );
 

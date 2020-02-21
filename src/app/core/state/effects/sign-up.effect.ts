@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { AuthActionTypes, SignUp, SignUpFailure, SignUpSuccess } from '../actions/auth.actions';
 
 @Injectable()
 export class SignUpEffect {
+ public user: firebase.User;
   @Effect()
   public signUp$: any = this.actions$
     .pipe(
@@ -24,11 +25,16 @@ export class SignUpEffect {
       }),
     )
     .pipe(
-      switchMap(() => {
-        this.afAuth.auth.onAuthStateChanged((resp) => {
-          resp.sendEmailVerification();
+      map(() => {
+         this.authService.getToken(),
+         localStorage.setItem("userId", this.user.uid),
+         localStorage.setItem("userEmail", this.user.email);
+         return new SignUpSuccess({
+          email: localStorage.getItem("userEmail"),
+          token: localStorage.getItem("userToken"),
+          id: localStorage.getItem("userId"),
         });
-        return of(new SignUpSuccess());
+
       }),
       catchError((error) => of(new SignUpFailure(error))),
     );
@@ -36,5 +42,9 @@ export class SignUpEffect {
     private actions$: Actions,
     private authService: AuthService,
     private afAuth: AngularFireAuth,
-  ) {}
+  ) {
+    this.afAuth.auth.onAuthStateChanged((resp) => {
+      this.user = resp;
+    });
+  }
 }

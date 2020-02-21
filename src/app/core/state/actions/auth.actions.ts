@@ -5,6 +5,8 @@ export enum AuthActionTypes {
   LoginSuccess = '[Auth] Login Success',
   LoginFailure = '[Auth] Login Failure',
   Logout = '[Auth] Logout',
+  LogoutSuccess = '[Auth] LogoutSuccess',
+  LogoutFailed = '[Auth] Logout LogoutFailed',
   LoginRedirect = '[Auth] Login Redirect',
   SignUp = '[Auth] Sign Up',
   SignUpSuccess = '[Auth] Sign Up Success',
@@ -36,6 +38,14 @@ export class LogInFailure implements Action {
 export class LogOut implements Action {
   public readonly type: AuthActionTypes.Logout = AuthActionTypes.Logout;
 }
+export class LogoutSuccess implements Action {
+  public readonly type: AuthActionTypes.LogoutSuccess = AuthActionTypes.LogoutSuccess;
+  constructor(public payload: any) {}
+}
+export class LogoutFailed  implements Action {
+  public readonly type: AuthActionTypes.LogoutFailed  = AuthActionTypes.LogoutFailed;
+  constructor(public payload: any) {}
+}
 
 export class LoginRedirect implements Action {
   public readonly type: AuthActionTypes.LoginRedirect =
@@ -50,6 +60,7 @@ export class SignUp implements Action {
 export class SignUpSuccess implements Action {
   public readonly type: AuthActionTypes.SignUpSuccess =
     AuthActionTypes.SignUpSuccess;
+    constructor(public payload: any) {}
 }
 
 export class SignUpFailure implements Action {
@@ -66,4 +77,6 @@ export type All =
   | LoginRedirect
   | SignUp
   | SignUpSuccess
-  | SignUpFailure;
+  | SignUpFailure
+  | LogoutSuccess
+  | LogoutFailed;

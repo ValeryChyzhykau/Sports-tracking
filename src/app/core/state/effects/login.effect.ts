@@ -16,10 +16,13 @@ export class LoginEffects {
         .login(data.payload.email, data.payload.password)
         .pipe(
           map((authState) => {
+            this.authService.getToken();
+            localStorage.setItem('userEmail', authState.user.email);
+            localStorage.setItem('userId', authState.user.uid);
             return new LogInSuccess({
-              token: this.authService.getToken(),
-              email: localStorage.setItem('userEmail', authState.user.email),
-              id: localStorage.setItem('userId', authState.user.uid),
+              user: localStorage.getItem('userToken'),
+              email:  authState.user.email,
+              id: authState.user.uid,
             });
           }),
           catchError((error) => of(new LogInFailure(error))),

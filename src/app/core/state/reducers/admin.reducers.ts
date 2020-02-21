@@ -7,9 +7,7 @@ export interface StateAdmin {
     selectedPicture: string;
     newGym: any;
     receivedGyms: any;
-    deleted: boolean;
     selectedId: string;
-    updated: boolean;
 }
 
 export const adminNode = 'stateAdmin';
@@ -21,8 +19,6 @@ export const initialState: StateAdmin = {
     selectedPicture: '',
     newGym: {},
     receivedGyms: [],
-    deleted: false,
-    updated: false,
     selectedId: '',
 };
 
@@ -31,22 +27,10 @@ export const stateAdmin = (
     action: AdminUnion,
 ): StateAdmin => {
     switch (action.type) {
-        case AdminStateActions.UpdateGymSuccess: {
-            return {
-                ...state,
-                updated: true,
-            };
-        }
         case AdminStateActions.GettingIdentifier: {
             return {
                 ...state,
                 selectedId:  action.id,
-            };
-        }
-        case AdminStateActions.RemoveGymSuccess: {
-            return {
-                ...state,
-                deleted: true,
             };
         }
         case AdminStateActions.LoadGymListSuccess: {

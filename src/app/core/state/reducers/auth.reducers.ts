@@ -1,8 +1,8 @@
 import { All, AuthActionTypes } from '../actions/auth.actions';
 
 export interface AuthState {
-  user: any;
   email: string;
+  user: any;
   id: string;
   errorMessage: string | null;
 }
@@ -18,21 +18,26 @@ export const initialState: AuthState = {
 export const authInformation = (state = initialState, action: All): AuthState => {
     switch (action.type) {
         case AuthActionTypes.LoginSuccess: {
+            console.log(state);
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload.token,
+                id: action.payload.id,
             };
         }
-        case AuthActionTypes.Logout: {
+        case AuthActionTypes.LogoutSuccess: {
+            console.log(state);
             return {
                 ...state,
-                user: undefined,
+                user: action.payload.user,
+                id: action.payload.id,
             };
         }
-        case AuthActionTypes.SignUp: {
+        case AuthActionTypes.SignUpSuccess: {
             return {
                 ...state,
-                user: action.payload.email,
+                user: action.payload.token,
+                id: action.payload.id,
             };
         }
         default: {

@@ -10,7 +10,7 @@ export class StateAdminEffect {
     @Effect()
     public adminStateValue$: any = this.actions$.pipe(
         ofType(AdminStateActions.LoadAdmin),
-        mergeMap(() => from(new Promise(resolve => {
+        mergeMap(() => from(new Promise((resolve) => {
             this.afAuth.auth.onAuthStateChanged((user: firebase.User) => {
                 user.getIdTokenResult(true).then((res) => resolve(res.claims.admin));
             });

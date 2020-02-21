@@ -17,7 +17,7 @@ export class AdminService {
     price: number,
     img: string,
   ): Observable<Promise<DocumentReference>> {
-    try{
+    try {
     return of(
       this.db.collection('admin').add({
         gymName,
