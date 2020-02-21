@@ -40,7 +40,7 @@ export class GymReservationComponent implements OnInit {
     private fb: FormBuilder,
     private storeUser$: Store<StateUser>,
     private modalService: NzModalService,
-  ) { }
+  ) { this.storeUser$.dispatch(new LoadReservationList());}
   public remove(id: string): void {
     this.modalService.confirm({
       nzTitle: 'Are you sure you want to remove the reservation?',
@@ -79,7 +79,6 @@ export class GymReservationComponent implements OnInit {
     this.isVisible = false;
   }
   public ngOnInit(): void {
-    this.storeUser$.dispatch(new LoadReservationList());
     this.updateReservationForm = this.fb.group({
       reservationDate: [null, [Validators.required]],
       from: [null, [Validators.required]],

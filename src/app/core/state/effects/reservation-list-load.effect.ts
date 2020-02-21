@@ -7,7 +7,7 @@ import { LoadReservationListFailed, LoadReservationListSuccess, UserStateActions
 
 @Injectable()
 export class LoadReservationListEffect {
-  @Effect()
+  @Effect({dispatch: false})
   public loadReservationList$: any = this.actions$.pipe(
     ofType(UserStateActions.LoadReservationList),
     mergeMap(() =>
