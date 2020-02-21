@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import { AuthActionTypes, LogIn, LogInFailure, LogInSuccess } from '../actions/auth.actions';
+import { AppState } from '../reducers';
 
 @Injectable()
 export class LoginEffects {
@@ -25,10 +27,13 @@ export class LoginEffects {
               id: authState.user.uid,
             });
           }),
-          catchError((error) => of(new LogInFailure(error))),
+          catchError((error, caught) => {
+            this.store$.dispatch(new LogInFailure(error));
+            return caught;
+          } ),
         );
     }),
   );
 
-  constructor(private actions$: Actions, private authService: AuthService ) {}
+  constructor(private actions$: Actions, private authService: AuthService, private store$: Store<AppState>) {}
 }

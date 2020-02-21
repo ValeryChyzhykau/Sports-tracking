@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { State } from '@ngrx/store';
-import { of } from 'rxjs';
+import { State, Store } from '@ngrx/store';
 import { catchError, map } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { AddNewReservation, AddNewReservationFailed, AddNewReservationSuccess, UserStateActions } from '../actions/user.actions';
+import { AppState } from '../reducers';
 import { StateAdmin } from '../reducers/admin.reducers';
 
 @Injectable()
@@ -25,12 +25,16 @@ export class AddNewReservationEffect {
         )
         .pipe(map((result) => new AddNewReservationSuccess(result)));
     }),
-    catchError((error) => of(new AddNewReservationFailed(error))),
+    catchError((error, caught) => {
+      this.store$.dispatch( new AddNewReservationFailed(error));
+      return caught;
+    }),
   );
 
   constructor(
     private actions$: Actions,
     private userService: UserService,
     public state: State<StateAdmin>,
+    private store$: Store<AppState>,
   ) {}
 }

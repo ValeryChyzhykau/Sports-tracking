@@ -4,18 +4,18 @@ import { adminNode, StateAdmin, stateAdmin } from './admin.reducers';
 import { authInformation, authState, AuthState } from './auth.reducers';
 import { StateUser, stateUser, userNode } from './user.reducers';
 
-export interface State {
+export interface AppState {
      [authState]: AuthState;
      [adminNode]: StateAdmin;
      [userNode]: StateUser;
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<AppState> = {
     [authState]: authInformation,
     [adminNode]: stateAdmin,
     [userNode]: stateUser,
 };
 
-export const metaReducers: Array<MetaReducer<State>> = !environment.production
+export const metaReducers: Array<MetaReducer<AppState>> = !environment.production
   ? []
   : [];

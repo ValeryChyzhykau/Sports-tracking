@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { State } from '@ngrx/store';
-import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { State, Store } from '@ngrx/store';
+import { catchError, map } from 'rxjs/operators';
 import { AdminService } from '../../services/admin.service';
-import { AddNewGym, AddNewGymFailed, AdminStateActions } from '../actions/admin.actions';
+import { AddNewGym, AdminStateActions } from '../actions/admin.actions';
+import { AddNewReservationFailed } from '../actions/user.actions';
+import { AppState } from '../reducers';
 import { StateAdmin } from '../reducers/admin.reducers';
 
 @Injectable()
@@ -19,11 +20,15 @@ export class AddNewGymEffect {
         data.payload.price,
         data.payload.img,
       );
-    }), catchError((error) => of(new AddNewGymFailed(error))),
+    }), catchError((error , caught) => {
+      this.store$.dispatch(new AddNewReservationFailed(error));
+      return caught;
+    } ),
   );
   constructor(
     private actions$: Actions,
     private adminService: AdminService,
     public state: State<StateAdmin>,
+    private store$: Store<AppState>,
   ) {}
 }
