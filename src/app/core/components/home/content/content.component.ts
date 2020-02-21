@@ -47,9 +47,7 @@ export class ContentComponent implements OnInit {
     private fb: FormBuilder,
     private modalService: NzModalService,
     private storeUser$: Store<StateUser>,
-  ) {
-    this.storeAdmin$.dispatch(new LoadGymList());
-  }
+  ) {}
   public remove(event: any): void {
     this.modalService.confirm({
       nzTitle: 'Are you sure delete this gym',
@@ -77,9 +75,9 @@ export class ContentComponent implements OnInit {
   }
   public handleOk(): void {
     let id: string;
-    this.selectedId.subscribe((resp: string) => (id = resp)).unsubscribe();
+    this.selectedId.subscribe((resp: string) => (id = resp));
     let picture: string;
-    this.selectedPicture.subscribe(response => (picture = response)).unsubscribe();
+    this.selectedPicture.subscribe(response => (picture = response));
     const result = {
       gymName: this.updateGymForm.controls.gymName.value,
       maximumNumberOfPeople: this.updateGymForm.controls.maximumNumberOfPeople
@@ -112,7 +110,7 @@ export class ContentComponent implements OnInit {
     this.selectedGym$.subscribe((result: any) => {
       price = result.price;
       gymName = result.gymName;
-    }).unsubscribe();
+    });
     const result = {
       gym: gymName,
       email: localStorage.getItem('userEmail'),
@@ -134,6 +132,7 @@ export class ContentComponent implements OnInit {
     this.isVisibleOrder = false;
   }
   public ngOnInit(): void {
+    this.storeAdmin$.dispatch(new LoadGymList());
     this.searchForm = this.fb.group({
       search: ['', [Validators.required]],
     });
