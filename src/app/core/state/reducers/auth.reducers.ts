@@ -1,4 +1,5 @@
 import { All, AuthActionTypes } from '../actions/auth.actions';
+import { ɵConsole } from '@angular/core';
 
 export interface AuthState {
   email: string;
@@ -16,6 +17,7 @@ export const initialState: AuthState = {
          errorMessage: null,
        };
 export const authInformation = (state = initialState, action: All): AuthState => {
+    console.log('state', state, action);
     switch (action.type) {
         case AuthActionTypes.LoginSuccess: {
             console.log(state);

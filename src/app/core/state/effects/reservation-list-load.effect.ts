@@ -4,10 +4,12 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { LoadReservationListFailed, LoadReservationListSuccess, UserStateActions } from '../actions/user.actions';
+import { Store } from '@ngrx/store';
+import { State } from '../reducers';
 
 @Injectable()
 export class LoadReservationListEffect {
-  @Effect({dispatch: false})
+  @Effect()
   public loadReservationList$: any = this.actions$.pipe(
     ofType(UserStateActions.LoadReservationList),
     mergeMap(() =>
@@ -18,7 +20,10 @@ export class LoadReservationListEffect {
         }),
       ),
     ),
-    catchError((error) => of(new LoadReservationListFailed(error))),
+    catchError((error, caught) =>  {
+      this.store$.dispatch(new LoadReservationListFailed(error));
+      return caught;
+    }),
   );
-  constructor(private actions$: Actions, private userService: UserService) {}
+  constructor(private actions$: Actions, private userService: UserService, private store$: Store<State>) {}
 }

@@ -25,6 +25,8 @@ export class UserService {
         .snapshotChanges()
         .pipe(
           map((actions: any) => {
+            console.log('COLLECTION');
+            console.log(actions);
             return actions.map((a: { payload: { doc: { data: () => any; id: string; }; }; }) => {
               const data = a.payload.doc.data() as any;
               console.log(data);

@@ -7,7 +7,7 @@ import { AdminStateActions, LoadGymListFailed, LoadGymListSuccess } from '../act
 
 @Injectable()
 export class LoadNewGymEffect {
-  @Effect({dispatch: false})
+  @Effect()
   public loadNewGym$: any = this.actions$.pipe(
     ofType(AdminStateActions.LoadGymList),
     mergeMap(() =>
