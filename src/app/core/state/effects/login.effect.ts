@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
+import { User } from '../../interfaces/user.interface';
 import { AuthActionTypes, LogIn, LogInFailure, LogInSuccess } from '../actions/auth.actions';
 import { AppState } from '../reducers';
 
@@ -17,12 +18,12 @@ export class LoginEffects {
       return this.authService
         .login(data.payload.email, data.payload.password)
         .pipe(
-          map((authState) => {
+          map((authState: User) => {
             this.authService.getToken();
             localStorage.setItem('userEmail', authState.user.email);
             localStorage.setItem('userId', authState.user.uid);
             return new LogInSuccess({
-              user: localStorage.getItem('userToken'),
+              user: localStorage.getItem('userToken') || '',
               email:  authState.user.email,
               id: authState.user.uid,
             });

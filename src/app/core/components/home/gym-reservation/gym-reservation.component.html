@@ -30,14 +30,14 @@
             <nz-form-label>Enter a new number of people</nz-form-label>
             <nz-row>
                 <nz-col nzSpan="12">
-                  <nz-slider [nzMin]="1" [nzMax]="(selectedusersReservation$ | async).maximumNumberOfPeople" formControlName="numberOfPeople"></nz-slider>
+                  <nz-slider [nzMin]="1" [nzMax]="(selectedUsersReservation$ | async).maximumNumberOfPeople" formControlName="numberOfPeople"></nz-slider>
                 </nz-col>
                 <div nz-col nzSpan="4" >
                   <nz-input-number
                     [ngModel] = 'updateReservationForm.controls.numberOfPeople.value'
                     [ngModelOptions]="{standalone: true}"
                     [nzMin]="1"
-                    [nzMax]="(selectedusersReservation$ | async).maximumNumberOfPeople"
+                    [nzMax]="(selectedUsersReservation$ | async).maximumNumberOfPeople"
                     [ngStyle]="{ marginLeft: '16px' }"
                   ></nz-input-number>
                 </div>

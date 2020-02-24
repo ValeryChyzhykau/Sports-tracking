@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { AdminData } from '@src/app/core/interfaces/admin-data.interface';
-import { UnspalshInterface } from '@src/app/core/interfaces/unsplash.interface';
+import { UserData } from '@src/app/core/interfaces/user-data.interface';
 import { AddingNewPicture, GettingIdentifier, LoadGymList, RemoveGym, SearchImgUnsplash, UpdateGym } from '@src/app/core/state/actions/admin.actions';
 import { AddNewReservation, GettingInformationAboutTheSelectedGym } from '@src/app/core/state/actions/user.actions';
 import { StateAdmin } from '@src/app/core/state/reducers/admin.reducers';
@@ -116,7 +116,7 @@ export class ContentComponent implements OnInit {
       price = response.price;
       gymName = response.gymName;
     });
-    const result = {
+    const result: UserData = {
       gym: gymName,
       email: localStorage.getItem('userEmail'),
       paymentAmount:
@@ -150,7 +150,7 @@ export class ContentComponent implements OnInit {
       reservationDate: [null, [Validators.required]],
       from: [null, [Validators.required]],
       to: [null, [Validators.required]],
-      numberOfPeople: [, [Validators.required], this.maximumNumberPeopleValidator()],
+      numberOfPeople: [null, [Validators.required], this.maximumNumberPeopleValidator()],
     });
   }
   public openOrderWindow(gym: AdminData): void {

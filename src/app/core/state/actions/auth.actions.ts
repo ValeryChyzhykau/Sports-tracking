@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { User } from '../../interfaces/user.interface';
 
 export enum AuthActionTypes {
   Login = '[Auth] Login',
@@ -20,13 +21,13 @@ export class HomeRedirect implements Action {
 
 export class LogIn implements Action {
   public readonly type: AuthActionTypes.Login = AuthActionTypes.Login;
-  constructor(public payload: any) {}
+  constructor(public payload: { email: string; password: string }) {}
 }
 
 export class LogInSuccess implements Action {
   public readonly type: AuthActionTypes.LoginSuccess =
     AuthActionTypes.LoginSuccess;
-  constructor(public payload: any) {}
+  constructor(public payload: {id: string, user: string, email: string}) {}
 }
 
 export class LogInFailure implements Action {
@@ -40,7 +41,7 @@ export class LogOut implements Action {
 }
 export class LogoutSuccess implements Action {
   public readonly type: AuthActionTypes.LogoutSuccess = AuthActionTypes.LogoutSuccess;
-  constructor(public payload: any) {}
+  constructor(public payload: {id: null, user: null }) {}
 }
 export class LogoutFailed  implements Action {
   public readonly type: AuthActionTypes.LogoutFailed  = AuthActionTypes.LogoutFailed;
@@ -55,13 +56,19 @@ export class LoginRedirect implements Action {
 
 export class SignUp implements Action {
   public readonly type: AuthActionTypes.SignUp = AuthActionTypes.SignUp;
-  constructor(public payload: any) {}
+  constructor(public auth: {
+    email: string,
+    password: string;
+    phone: number;
+    userName: string;
+    login: string;
+  }) {}
 }
 
 export class SignUpSuccess implements Action {
   public readonly type: AuthActionTypes.SignUpSuccess =
     AuthActionTypes.SignUpSuccess;
-    constructor(public payload: any) {}
+    constructor(public payload: {id: string, user: string, email: string}) {}
 }
 
 export class SignUpFailure implements Action {

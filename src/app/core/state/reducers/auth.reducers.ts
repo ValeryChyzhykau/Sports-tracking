@@ -1,9 +1,9 @@
 import { All, AuthActionTypes } from '../actions/auth.actions';
 
 export interface AuthState {
-  email: string;
-  user: any;
-  id: string;
+  email: string | null;
+  user: string | null;
+  id: string | null;
   errorMessage: string | null;
 }
 
@@ -20,7 +20,7 @@ export const authInformation = (state = initialState, action: All): AuthState =>
         case AuthActionTypes.LoginSuccess: {
             return {
                 ...state,
-                user: action.payload.token,
+                user: action.payload.user,
                 id: action.payload.id,
             };
         }
@@ -34,7 +34,7 @@ export const authInformation = (state = initialState, action: All): AuthState =>
         case AuthActionTypes.SignUpSuccess: {
             return {
                 ...state,
-                user: action.payload.token,
+                user: action.payload.user,
                 id: action.payload.id,
             };
         }

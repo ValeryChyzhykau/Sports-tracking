@@ -1,12 +1,13 @@
+import { AdminData } from '../../interfaces/admin-data.interface';
 import { AdminStateActions, AdminUnion } from '../actions/admin.actions';
 
 export interface StateAdmin {
     adminState: boolean;
     imgArray: string[];
-    searchValue: any;
+    searchValue: string;
     selectedPicture: string;
-    newGym: any;
-    receivedGyms: any;
+    newGym: AdminData;
+    receivedGyms: AdminData[];
     selectedId: string;
 }
 
@@ -17,7 +18,12 @@ export const initialState: StateAdmin = {
     imgArray: [],
     searchValue: '',
     selectedPicture: '',
-    newGym: {},
+    newGym: {
+        gymName: '',
+        maximumNumberOfPeople: 0,
+        img: '',
+        price: 0,
+    },
     receivedGyms: [],
     selectedId: '',
 };

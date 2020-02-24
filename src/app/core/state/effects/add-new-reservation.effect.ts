@@ -24,7 +24,7 @@ export class AddNewReservationEffect {
           data.payload.numberOfPeople,
           data.payload.gym,
         )
-        .pipe(map((result: any) => new AddNewReservationSuccess(result))); // interface
+        .pipe(map((result: any) => new AddNewReservationSuccess(result)));
     }),
     catchError((error, caught) => {
       this.store$.dispatch( new AddNewReservationFailed(error));

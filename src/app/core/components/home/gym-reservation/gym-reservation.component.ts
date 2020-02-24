@@ -51,7 +51,7 @@ export class GymReservationComponent implements OnInit {
       nzOnOk: (): void => this.storeUser$.dispatch(new RemoveReservation(id)),
     });
   }
-  public showModal(resp: string): void {
+  public showModal(resp: UserData): void {
     this.storeUser$.dispatch( new GettingSelectedReservation (resp) );
     this.isVisible = true;
   }
@@ -62,7 +62,7 @@ export class GymReservationComponent implements OnInit {
       pricePerHour = selected.pricePerHour;
       id = selected.id;
     });
-    const result = {
+    const result: UserData = {
       paymentAmount:
         pricePerHour *
         (this.updateReservationForm.controls.to.value.getHours() -

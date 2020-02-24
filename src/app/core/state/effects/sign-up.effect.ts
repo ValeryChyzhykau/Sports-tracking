@@ -15,8 +15,8 @@ export class SignUpEffect {
   public signUp$: Observable<SignUpSuccess> = this.actions$
     .pipe(
       ofType(AuthActionTypes.SignUp),
-      map((action: SignUp) => action.payload),
-      switchMap((auth: any) => {
+      map((action: SignUp) => action.auth),
+      switchMap((auth) => {
         return this.authService.signUp(
           auth.email,
           auth.password,
@@ -33,7 +33,7 @@ export class SignUpEffect {
          localStorage.setItem("userEmail", this.user.email);
          return new SignUpSuccess({
           email: localStorage.getItem("userEmail"),
-          token: localStorage.getItem("userToken"),
+          user: localStorage.getItem("userToken"),
           id: localStorage.getItem("userId"),
         });
 

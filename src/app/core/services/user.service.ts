@@ -29,6 +29,7 @@ export class UserService {
           map((actions: Array<DocumentChangeAction<UserData>>) => {
             return actions.map((a: { payload: { doc: { data: () => UserData; id: string; }; }; }) => {
               const data = a.payload.doc.data() as UserData;
+              console.log(data)
               const id = a.payload.doc.id as string;
               return { id, ...data };
             });
@@ -54,6 +55,7 @@ export class UserService {
         price = res.price;
         maximumNumberOfPeople = res.maximumNumberOfPeople;
       });
+      console.log(maximumNumberOfPeople);
       let resp: string;
       this.userId.subscribe((res: string) => (resp = res));
       return of(

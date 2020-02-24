@@ -1,4 +1,6 @@
 import { Action } from '@ngrx/store';
+import { AdminData } from '../../interfaces/admin-data.interface';
+import { UserData } from '../../interfaces/user-data.interface';
 
 export enum UserStateActions {
     LoadReservationListFailed = '[User] LoadReservationListFailed',
@@ -26,7 +28,7 @@ export class LoadReservationList implements Action {
 export class LoadReservationListSuccess implements Action {
     public readonly type: UserStateActions.LoadReservationListSuccess =
       UserStateActions.LoadReservationListSuccess;
-    constructor(public payload: any) {}
+    constructor(public payload: UserData[]) {}
   }
 
 export class LoadReservationListFailed implements Action {
@@ -38,13 +40,13 @@ export class LoadReservationListFailed implements Action {
 export class AddNewReservation implements Action {
     public readonly type: UserStateActions.AddNewReservation =
       UserStateActions.AddNewReservation;
-    constructor(public payload: any) {}
+    constructor(public payload: UserData) {}
   }
 
 export class AddNewReservationSuccess implements Action {
     public readonly type: UserStateActions.AddNewReservationSuccess =
     UserStateActions.AddNewReservationSuccess;
-    constructor(public payload: any) {}
+    constructor(public payload: AdminData) {}
   }
 
 export class AddNewReservationFailed implements Action {
@@ -62,7 +64,6 @@ export class RemoveReservation implements Action {
 export class RemoveReservationSuccess implements Action {
     public readonly type: UserStateActions.RemoveReservationSuccess =
     UserStateActions.RemoveReservationSuccess;
-    constructor(public payload: any) {}
   }
 
 export class RemoveReservationFailed implements Action {
@@ -74,13 +75,12 @@ export class RemoveReservationFailed implements Action {
 export class UpdateReservation implements Action {
     public readonly type: UserStateActions.UpdateReservation =
       UserStateActions.UpdateReservation;
-    constructor(public id: string, public payload: any) {}
+    constructor(public id: string, public payload: UserData) {}
   }
 
 export class UpdateReservationSuccess implements Action {
     public readonly type: UserStateActions.UpdateReservationSuccess =
     UserStateActions.UpdateReservationSuccess;
-    constructor(public payload: any) {}
   }
 
 export class UpdateReservationFailed implements Action {
@@ -92,13 +92,13 @@ export class UpdateReservationFailed implements Action {
 export class GettingInformationAboutTheSelectedGym implements Action {
     public readonly type: UserStateActions.GettingInformationAboutTheSelectedGym =
     UserStateActions.GettingInformationAboutTheSelectedGym;
-    constructor(public payload: any) {}
+    constructor(public payload: AdminData) {}
   }
 
-export class  GettingSelectedReservation implements Action {
+export class GettingSelectedReservation implements Action {
     public readonly type: UserStateActions. GettingSelectedReservation =
     UserStateActions. GettingSelectedReservation;
-    constructor(public id: string) {}
+    constructor(public payload: UserData) {}
   }
 
 export type UserUnion =
@@ -115,4 +115,4 @@ export type UserUnion =
 | UpdateReservationSuccess
 | UpdateReservationFailed
 | GettingInformationAboutTheSelectedGym
-|  GettingSelectedReservation;
+| GettingSelectedReservation;

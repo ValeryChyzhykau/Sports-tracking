@@ -68,7 +68,7 @@ export class RemoveGymFailed implements Action {
 export class AddingNewPicture implements Action {
   public readonly type: AdminStateActions.AddingNewPicture =
     AdminStateActions.AddingNewPicture;
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export class LoadAdmin implements Action {
@@ -79,7 +79,7 @@ export class LoadAdmin implements Action {
 export class LoadAdminSuccess implements Action {
   public readonly type: AdminStateActions.LoadAdminSuccess =
     AdminStateActions.LoadAdminSuccess;
-  constructor(public payload: any) {}
+  constructor(public payload: boolean) {}
 }
 
 export class LoadAdminFailed implements Action {
@@ -96,7 +96,7 @@ export class LoadGymList implements Action {
 export class LoadGymListSuccess implements Action {
   public readonly type: AdminStateActions.LoadGymListSuccess =
     AdminStateActions.LoadGymListSuccess;
-  constructor(public payload: any) {}
+  constructor(public payload: AdminData[]) {}
 }
 
 export class LoadGymListFailed implements Action {
@@ -108,7 +108,7 @@ export class LoadGymListFailed implements Action {
 export class AddNewGym implements Action {
   public readonly type: AdminStateActions.AddNewGym =
     AdminStateActions.AddNewGym;
-  constructor(public payload: any) {}
+  constructor(public payload: AdminData) {}
 }
 export class AddNewGymSuccess implements Action {
   public readonly type: AdminStateActions.AddNewGymSuccess =
@@ -141,7 +141,7 @@ export class LoadImgUnsplashSuccess implements Action {
 export class SearchImgUnsplash implements Action {
   public readonly type: AdminStateActions.SearchImgUnsplash =
     AdminStateActions.SearchImgUnsplash;
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export type AdminUnion =

@@ -16,7 +16,7 @@ export class UpdateReservationEffect {
     map((data: UpdateReservation) =>
       this.userService
         .updateReservation(data.id, data.payload)
-        .pipe(map((result) => new UpdateReservationSuccess(result))),
+        .pipe(map(() => new UpdateReservationSuccess())),
     ),
     catchError((error, caught) => {
       this.store$.dispatch(new UpdateReservationFailed(error));
