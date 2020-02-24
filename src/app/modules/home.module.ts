@@ -1,3 +1,5 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -33,6 +35,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map((key) => antDesi
 @NgModule({
   declarations: [ HomeComponent, HeaderComponent, ContentComponent, GymReservationComponent ],
   imports: [
+    ScrollingModule,
+    DragDropModule,
     RouterModule.forChild(routes),
     CommonModule,
     NgZorroAntdModule,

@@ -174,4 +174,7 @@ export class ContentComponent implements OnInit {
       );
     };
   }
+  public disabledHours(): number[] {
+    return [1, 2, 3];
+  }
 }

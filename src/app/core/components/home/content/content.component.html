@@ -75,11 +75,11 @@
                     </nz-date-picker>
                     <br>
                     <nz-form-label>Initial Time</nz-form-label>
-                    <nz-time-picker [nzAllowEmpty]="true" [nzDefaultOpenValue]="defaultOpenValue | async" formControlName="from" [nzMinuteStep]="60"
+                    <nz-time-picker [nzAllowEmpty]="true" [nzDisabledHours]="disabledHours"  [nzDefaultOpenValue]="defaultOpenValue | async" formControlName="from" [nzMinuteStep]="60"
                     nzFormat="HH:mm"></nz-time-picker>
                     <br>
                     <nz-form-label>End Time</nz-form-label>
-                    <nz-time-picker formControlName="to" [nzDefaultOpenValue]="defaultOpenValue | async" [nzMinuteStep]="60" nzFormat="HH:mm"></nz-time-picker>
+                    <nz-time-picker formControlName="to" [nzDisabledHours]="disabledHours"  [nzDefaultOpenValue]="defaultOpenValue | async" [nzMinuteStep]="60" nzFormat="HH:mm"></nz-time-picker>
                     <nz-form-item>
                         <nz-form-control nzErrorTip="Please input number peoples or you indicated too many people">
                             <nz-form-label> Number peoples</nz-form-label>

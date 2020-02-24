@@ -29,7 +29,6 @@ export class UserService {
           map((actions: Array<DocumentChangeAction<UserData>>) => {
             return actions.map((a: { payload: { doc: { data: () => UserData; id: string; }; }; }) => {
               const data = a.payload.doc.data() as UserData;
-              console.log(data)
               const id = a.payload.doc.id as string;
               return { id, ...data };
             });
