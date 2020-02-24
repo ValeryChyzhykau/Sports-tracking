@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Unsubscribe } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { User } from '../interfaces/user.interface';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
       return from(
         this.afAuth.auth
           .createUserWithEmailAndPassword(email, password)
-          .then((res: any) => {
+          .then((res: User) => {
             return this.db
               .collection('users')
               .doc(res.user.uid)
@@ -36,7 +37,7 @@ export class AuthService {
       alert(error.message);
     }
   }
-  public login(email: string, password: string): Observable<any> {
+  public login(email: string, password: string): Observable<User> {
     try {
       return from(
         this.afAuth.auth.signInWithEmailAndPassword(email, password),
@@ -60,7 +61,6 @@ export class AuthService {
     try {
     return this.afAuth.authState.pipe(
       map((data: firebase.User) => {
-        console.log(data);
         if (data !== undefined && data !== null) {
           return true;
         } else {

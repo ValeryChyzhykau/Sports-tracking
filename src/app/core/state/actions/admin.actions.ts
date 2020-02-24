@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { AdminData } from '../../interfaces/admin-data.interface';
 
 export enum AdminStateActions {
     LoadAdminSuccess = '[Admin] LoadAdminSuccess',
@@ -27,7 +28,7 @@ export enum AdminStateActions {
 export class UpdateGym implements Action {
     public readonly type: AdminStateActions.UpdateGym =
       AdminStateActions.UpdateGym;
-    constructor(public id: string, public payload: any) {}
+    constructor(public id: string, public payload: AdminData) {}
   }
 
 export class UpdateGymSuccess implements Action {
@@ -38,32 +39,31 @@ export class UpdateGymSuccess implements Action {
 export class UpdateGymFailed implements Action {
     public readonly type: AdminStateActions.UpdateGymFailed =
       AdminStateActions.UpdateGymFailed;
-    constructor(public payload: any) {}
-  }
+      constructor(public payload: Error) {}
+    }
 
 export class GettingIdentifier implements Action {
     public readonly type: AdminStateActions.GettingIdentifier =
       AdminStateActions.GettingIdentifier;
-    constructor(public id: any) {}
+    constructor(public id: string) {}
   }
 
 export class RemoveGym implements Action {
   public readonly type: AdminStateActions.RemoveGym =
     AdminStateActions.RemoveGym;
-  constructor(public id: any) {}
+  constructor(public id: string) {}
 }
 
 export class RemoveGymSuccess implements Action {
   public readonly type: AdminStateActions.RemoveGymSuccess =
     AdminStateActions.RemoveGymSuccess;
-  constructor(public payload: any) {}
 }
 
 export class RemoveGymFailed implements Action {
   public readonly type: AdminStateActions.RemoveGymFailed =
     AdminStateActions.RemoveGymFailed;
-  constructor(public payload: any) {}
-}
+    constructor(public payload: Error) {}
+  }
 
 export class AddingNewPicture implements Action {
   public readonly type: AdminStateActions.AddingNewPicture =
@@ -85,8 +85,8 @@ export class LoadAdminSuccess implements Action {
 export class LoadAdminFailed implements Action {
   public readonly type: AdminStateActions.LoadAdminFailed =
     AdminStateActions.LoadAdminFailed;
-  constructor(public payload: any) {}
-}
+    constructor(public payload: Error) {}
+  }
 
 export class LoadGymList implements Action {
   public readonly type: AdminStateActions.LoadGymList =
@@ -102,20 +102,24 @@ export class LoadGymListSuccess implements Action {
 export class LoadGymListFailed implements Action {
   public readonly type: AdminStateActions.LoadGymListFailed =
     AdminStateActions.LoadGymListFailed;
-  constructor(public payload: any) {}
-}
+    constructor(public payload: Error) {}
+  }
 
 export class AddNewGym implements Action {
   public readonly type: AdminStateActions.AddNewGym =
     AdminStateActions.AddNewGym;
   constructor(public payload: any) {}
 }
+export class AddNewGymSuccess implements Action {
+  public readonly type: AdminStateActions.AddNewGymSuccess =
+    AdminStateActions.AddNewGymSuccess;
+}
 
 export class AddNewGymFailed implements Action {
   public readonly type: AdminStateActions.AddNewGymFailed =
     AdminStateActions.AddNewGymFailed;
-  constructor(public payload: any) {}
-}
+    constructor(public payload: Error) {}
+  }
 
 export class LoadImgUnsplash implements Action {
   public readonly type: AdminStateActions.LoadImgUnsplash =
@@ -125,13 +129,13 @@ export class LoadImgUnsplash implements Action {
 export class LoadImgUnsplashFailed implements Action {
   public readonly type: AdminStateActions.LoadImgUnsplashFailed =
     AdminStateActions.LoadImgUnsplashFailed;
-  constructor(public payload: any) {}
+  constructor(public payload: Error) {}
 }
 
 export class LoadImgUnsplashSuccess implements Action {
   public readonly type: AdminStateActions.LoadImgUnsplashSuccess =
     AdminStateActions.LoadImgUnsplashSuccess;
-  constructor(public payload: any) {}
+  constructor(public payload: string[]) {}
 }
 
 export class SearchImgUnsplash implements Action {

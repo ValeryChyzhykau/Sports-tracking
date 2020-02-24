@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { UnspalshInterface } from '@src/app/core/interfaces/unsplash.interface';
 import { AddingNewPicture, AddNewGym, SearchImgUnsplash } from '@src/app/core/state/actions/admin.actions';
 import { LogOut } from '@src/app/core/state/actions/auth.actions';
 import { StateAdmin } from '@src/app/core/state/reducers/admin.reducers';
@@ -15,9 +16,9 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-  public imgItem: Observable<any> = this.storeAdmin$.pipe(select(selectUnspalshEvents));
+  public imgItem: Observable<string[]> = this.storeAdmin$.pipe(select(selectUnspalshEvents));
   public selectedPicture: Observable<string> = this.storeAdmin$.pipe(select(selectPicture));
-  public checkAdminStatus: any = this.storeAdmin$.pipe(select(selectAdminStateEvents));
+  public checkAdminStatus: Observable<boolean> = this.storeAdmin$.pipe(select(selectAdminStateEvents));
   public searchForm: FormGroup;
   public addNewGymForm: FormGroup;
   public isVisible: boolean;
@@ -54,8 +55,8 @@ export class HeaderComponent implements OnInit {
   }
   public handleOk(): void {
     let picture: string;
-    this.selectedPicture.subscribe((response) => picture = response);
-    const result: any = {
+    this.selectedPicture.subscribe((response: string) => picture = response);
+    const result = {
       gymName: this.addNewGymForm.controls.gymName.value,
       maximumNumberOfPeople: this.addNewGymForm.controls.maximumNumberOfPeople.value,
       price: this.addNewGymForm.controls.price.value,

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { AdminData } from '@src/app/core/interfaces/admin-data.interface';
+import { UnspalshInterface } from '@src/app/core/interfaces/unsplash.interface';
 import { AddingNewPicture, GettingIdentifier, LoadGymList, RemoveGym, SearchImgUnsplash, UpdateGym } from '@src/app/core/state/actions/admin.actions';
 import { AddNewReservation, GettingInformationAboutTheSelectedGym } from '@src/app/core/state/actions/user.actions';
 import { StateAdmin } from '@src/app/core/state/reducers/admin.reducers';
@@ -22,17 +24,17 @@ export class ContentComponent implements OnInit {
   public isVisible: boolean = false;
   public isVisibleSearch: boolean = false;
   public reservationForm: FormGroup;
-  public selectedGym$: Observable<any> = this.storeUser$.pipe(select(selectGym));
+  public selectedGym$: Observable<AdminData> = this.storeUser$.pipe(select(selectGym));
   public defaultOpenValue: Observable<Date> = this.storeUser$.pipe(select(defaultOpenValue));
-  public imgItem: Observable<any> = this.storeAdmin$.pipe(
+  public imgItem: Observable<string[]> = this.storeAdmin$.pipe(
     select(selectUnspalshEvents),
   );
   public searchForm: FormGroup;
   public updateGymForm: FormGroup;
-  public gyms: Observable<any> = this.storeAdmin$.pipe(
+  public gyms: Observable<AdminData[]> = this.storeAdmin$.pipe(
     select(LoadedGymsEvents),
   );
-  public checkAdminStatus: any = this.storeAdmin$.pipe(
+  public checkAdminStatus: Observable<boolean> = this.storeAdmin$.pipe(
     select(selectAdminStateEvents),
   );
   public selectedPicture: Observable<string> = this.storeAdmin$.pipe(
@@ -48,7 +50,7 @@ export class ContentComponent implements OnInit {
     private modalService: NzModalService,
     private storeUser$: Store<StateUser>,
   ) {}
-  public remove(event: any): void {
+  public remove(event: AdminData): void {
     this.modalService.confirm({
       nzTitle: 'Are you sure delete this gym',
       nzOkText: 'Yes',
@@ -57,7 +59,7 @@ export class ContentComponent implements OnInit {
       nzOnOk: (): void => this.storeAdmin$.dispatch(new RemoveGym(event.id)),
     });
   }
-  public showModal(resp: any): void {
+  public showModal(resp: AdminData): void {
     this.storeAdmin$.dispatch(new GettingIdentifier(resp.id));
     this.updateGymForm = this.fb.group({
       gymName: [resp.gymName, [Validators.required]],
@@ -77,7 +79,7 @@ export class ContentComponent implements OnInit {
     let id: string;
     this.selectedId.subscribe((resp: string) => (id = resp));
     let picture: string;
-    this.selectedPicture.subscribe(response => (picture = response));
+    this.selectedPicture.subscribe((response: string) => (picture = response));
     const result = {
       gymName: this.updateGymForm.controls.gymName.value,
       maximumNumberOfPeople: this.updateGymForm.controls.maximumNumberOfPeople
@@ -107,9 +109,12 @@ export class ContentComponent implements OnInit {
   public confirmReservation(): void {
     let price: number;
     let gymName: string;
-    this.selectedGym$.subscribe((result: any) => {
-      price = result.price;
-      gymName = result.gymName;
+    this.selectedGym$.subscribe((response: {
+        price: number,
+        gymName: string,
+      }) => {
+      price = response.price;
+      gymName = response.gymName;
     });
     const result = {
       gym: gymName,
@@ -148,7 +153,7 @@ export class ContentComponent implements OnInit {
       numberOfPeople: [, [Validators.required], this.maximumNumberPeopleValidator()],
     });
   }
-  public openOrderWindow(gym: any): void {
+  public openOrderWindow(gym: AdminData): void {
     this.storeUser$.dispatch(new GettingInformationAboutTheSelectedGym(gym));
     this.isVisibleOrder = true;
   }

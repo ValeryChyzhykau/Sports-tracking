@@ -2,7 +2,7 @@ import { AdminStateActions, AdminUnion } from '../actions/admin.actions';
 
 export interface StateAdmin {
     adminState: boolean;
-    imgArray: any[];
+    imgArray: string[];
     searchValue: any;
     selectedPicture: string;
     newGym: any;

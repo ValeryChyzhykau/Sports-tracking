@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ImageInterface } from '../../interfaces/image.interface';
 import { adminNode, StateAdmin } from '../reducers/admin.reducers';
 
 export const selectAdminStateFeature = createFeatureSelector<StateAdmin>(adminNode);
@@ -14,7 +15,7 @@ export const selectAdminStateEvents = createSelector(
 
 export const selectUnspalshEvents = createSelector(
     selectUnspalshFeature,
-    (state: StateAdmin): any => state.imgArray,
+    (state: StateAdmin): string[] => state.imgArray,
 );
 
 export const selectPicture = createSelector(

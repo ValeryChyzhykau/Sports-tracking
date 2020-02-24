@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { UserData } from '@src/app/core/interfaces/user-data.interface';
 import { GettingSelectedReservation, LoadReservationList, RemoveReservation, UpdateReservation } from '@src/app/core/state/actions/user.actions';
 import { StateUser } from '@src/app/core/state/reducers/user.reducers';
 import { defaultOpenValue, selectUsersReservations, selectUsersReservationStateEvents } from '@src/app/core/state/selectors/user.selectors';
@@ -16,15 +17,15 @@ import { map } from 'rxjs/operators';
 })
 export class GymReservationComponent implements OnInit {
   public email: string = localStorage.getItem('userEmail');
-  public reservationList$: Observable<any> = this.storeUser$.pipe(
+  public reservationList$: Observable<UserData[]> = this.storeUser$.pipe(
     select(selectUsersReservationStateEvents),
   );
   public defaultOpenValue: Observable<Date> = this.storeUser$.pipe(select(defaultOpenValue));
 
-  public selectedusersReservation$: Observable<string> = this.storeUser$.pipe(
+  public selectedUsersReservation$: Observable<UserData> = this.storeUser$.pipe(
     select(selectUsersReservations),
   );
-  public userReservationList: Observable<any> = this.reservationList$.pipe(
+  public userReservationList: Observable<UserData[]> = this.reservationList$.pipe(
     map((data) => {
       const filter = data.filter((elem: { idUser: string; }) => {
         if (elem.idUser === localStorage.getItem('userId')) {
@@ -50,14 +51,14 @@ export class GymReservationComponent implements OnInit {
       nzOnOk: (): void => this.storeUser$.dispatch(new RemoveReservation(id)),
     });
   }
-  public showModal(resp: any): void {
+  public showModal(resp: string): void {
     this.storeUser$.dispatch( new GettingSelectedReservation (resp) );
     this.isVisible = true;
   }
   public handleOk(): void {
     let id: string;
     let pricePerHour: number;
-    this.selectedusersReservation$.subscribe((selected: any) => {
+    this.selectedUsersReservation$.subscribe((selected: UserData) => {
       pricePerHour = selected.pricePerHour;
       id = selected.id;
     });

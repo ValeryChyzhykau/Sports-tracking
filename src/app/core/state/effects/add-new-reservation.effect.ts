@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { State, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { AddNewReservation, AddNewReservationFailed, AddNewReservationSuccess, UserStateActions } from '../actions/user.actions';
@@ -10,7 +11,7 @@ import { StateAdmin } from '../reducers/admin.reducers';
 @Injectable()
 export class AddNewReservationEffect {
   @Effect({ dispatch: false })
-  public addNewReservation: any = this.actions$.pipe(
+  public addNewReservation: Observable<Observable<AddNewReservationSuccess>> = this.actions$.pipe(
     ofType(UserStateActions.AddNewReservation),
     map((data: AddNewReservation) => {
       return this.userService
@@ -23,7 +24,7 @@ export class AddNewReservationEffect {
           data.payload.numberOfPeople,
           data.payload.gym,
         )
-        .pipe(map((result) => new AddNewReservationSuccess(result)));
+        .pipe(map((result: any) => new AddNewReservationSuccess(result))); // interface
     }),
     catchError((error, caught) => {
       this.store$.dispatch( new AddNewReservationFailed(error));

@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { AuthActionTypes, SignUp, SignUpFailure, SignUpSuccess } from '../actions/auth.actions';
+import { AppState } from '../reducers';
 
 @Injectable()
 export class SignUpEffect {
  public user: firebase.User;
   @Effect()
-  public signUp$: any = this.actions$
+  public signUp$: Observable<SignUpSuccess> = this.actions$
     .pipe(
       ofType(AuthActionTypes.SignUp),
       map((action: SignUp) => action.payload),
@@ -36,12 +38,16 @@ export class SignUpEffect {
         });
 
       }),
-      catchError((error) => of(new SignUpFailure(error))),
+      catchError((error, caught) => {
+        this.store$.dispatch(new SignUpFailure(error));
+        return caught;
+      }),
     );
   constructor(
     private actions$: Actions,
     private authService: AuthService,
     private afAuth: AngularFireAuth,
+    private store$: Store<AppState>,
   ) {
     this.afAuth.auth.onAuthStateChanged((resp) => {
       this.user = resp;

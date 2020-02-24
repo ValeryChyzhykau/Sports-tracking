@@ -32,7 +32,7 @@ export class LogInSuccess implements Action {
 export class LogInFailure implements Action {
   public readonly type: AuthActionTypes.LoginFailure =
     AuthActionTypes.LoginFailure;
-  constructor(public payload: any) {}
+    constructor(public payload: Error) {}
 }
 
 export class LogOut implements Action {
@@ -44,7 +44,8 @@ export class LogoutSuccess implements Action {
 }
 export class LogoutFailed  implements Action {
   public readonly type: AuthActionTypes.LogoutFailed  = AuthActionTypes.LogoutFailed;
-  constructor(public payload: any) {}
+  constructor(public payload: Error) {}
+
 }
 
 export class LoginRedirect implements Action {
@@ -66,7 +67,7 @@ export class SignUpSuccess implements Action {
 export class SignUpFailure implements Action {
   public readonly type: AuthActionTypes.SignUpFailure =
     AuthActionTypes.SignUpFailure;
-  constructor(public payload: any) {}
+    constructor(public payload: Error) {}
 }
 
 export type All =

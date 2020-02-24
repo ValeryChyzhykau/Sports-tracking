@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AdminData } from '../interfaces/admin-data.interface';
+import { UserData } from '../interfaces/user-data.interface';
 import { AuthState } from '../state/reducers/auth.reducers';
 import { StateUser } from '../state/reducers/user.reducers';
 import { selectAuthIdEvents } from '../state/selectors/auth.selectors';
@@ -13,25 +15,21 @@ export class UserService {
   public userId: Observable<string> = this.store$.pipe(
     select(selectAuthIdEvents),
   );
-  public selectedGym: Observable<any> = this.storeUser$.pipe(select(selectGym));
+  public selectedGym: Observable<AdminData> = this.storeUser$.pipe(select(selectGym));
 
   constructor(private db: AngularFirestore, private store$: Store<AuthState>, private storeUser$: Store<StateUser>,
     ) {}
 
-  public getReservation(): Observable<void> {
+  public getReservation(): Observable<UserData[]> {
     try {
       return this.db
         .collection(`reservations`)
         .snapshotChanges()
         .pipe(
-          map((actions: any) => {
-            console.log('COLLECTION');
-            console.log(actions);
-            return actions.map((a: { payload: { doc: { data: () => any; id: string; }; }; }) => {
-              const data = a.payload.doc.data() as any;
-              console.log(data);
-              const id = a.payload.doc.id;
-              console.log(id);
+          map((actions: Array<DocumentChangeAction<UserData>>) => {
+            return actions.map((a: { payload: { doc: { data: () => UserData; id: string; }; }; }) => {
+              const data = a.payload.doc.data() as UserData;
+              const id = a.payload.doc.id as string;
               return { id, ...data };
             });
           }),
@@ -52,7 +50,7 @@ export class UserService {
     try {
       let maximumNumberOfPeople: number;
       let price: number;
-      this.selectedGym.subscribe((res: any) => {
+      this.selectedGym.subscribe((res: AdminData) => {
         price = res.price;
         maximumNumberOfPeople = res.maximumNumberOfPeople;
       });
@@ -92,7 +90,7 @@ export class UserService {
   }
   public updateReservation(
     id: string,
-    newData: any,
+    newData: UserData,
   ): Observable<Promise<void>> {
     try {
     return of(this.db.doc(`/reservations/${id}`).update(newData));

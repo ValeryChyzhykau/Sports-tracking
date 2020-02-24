@@ -32,8 +32,8 @@ export class LoadReservationListSuccess implements Action {
 export class LoadReservationListFailed implements Action {
     public readonly type: UserStateActions.LoadReservationListFailed =
       UserStateActions.LoadReservationListFailed;
-    constructor(public payload: any) {}
-  }
+      constructor(public payload: Error) {}
+    }
 
 export class AddNewReservation implements Action {
     public readonly type: UserStateActions.AddNewReservation =
@@ -50,8 +50,8 @@ export class AddNewReservationSuccess implements Action {
 export class AddNewReservationFailed implements Action {
     public readonly type: UserStateActions.AddNewReservationFailed =
       UserStateActions.AddNewReservationFailed;
-    constructor(public payload: any) {}
-  }
+      constructor(public payload: Error) {}
+    }
 
 export class RemoveReservation implements Action {
     public readonly type: UserStateActions.RemoveReservation =
@@ -68,8 +68,8 @@ export class RemoveReservationSuccess implements Action {
 export class RemoveReservationFailed implements Action {
     public readonly type: UserStateActions.RemoveReservationFailed =
       UserStateActions.RemoveReservationFailed;
-    constructor(public payload: any) {}
-  }
+      constructor(public payload: Error) {}
+    }
 
 export class UpdateReservation implements Action {
     public readonly type: UserStateActions.UpdateReservation =
@@ -86,8 +86,8 @@ export class UpdateReservationSuccess implements Action {
 export class UpdateReservationFailed implements Action {
     public readonly type: UserStateActions.UpdateReservationFailed =
       UserStateActions.UpdateReservationFailed;
-    constructor(public payload: any) {}
-  }
+      constructor(public payload: Error) {}
+    }
 
 export class GettingInformationAboutTheSelectedGym implements Action {
     public readonly type: UserStateActions.GettingInformationAboutTheSelectedGym =
