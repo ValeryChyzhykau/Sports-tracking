@@ -1,0 +1,63 @@
+<div id='header'>
+  <div class='app-logo'><img src="https://img.icons8.com/color/2x/triceps.png"></div>
+  <div class='logout'>
+    <button class="modal" nz-button nzType="danger" nzGhost (click)="showModal()" *ngIf="checkAdminStatus | async">
+      <span>Add new Gym</span>
+    </button>
+    <nz-modal class="add-gym" [(nzVisible)]="isVisible" nzTitle="Create New Gym" (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()">
+      <form [formGroup]="addNewGymForm" (ngSubmit)="handleOk()" nz-form novalidate>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input Gym Name">
+            <nz-input-group nzPrefixIcon="audit">
+              <input formControlName="gymName" nz-input placeholder="Enter Gym Name" type="text" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input maximum number of people">
+            <nz-input-group nzPrefixIcon="team">
+              <input formControlName="maximumNumberOfPeople" nz-input placeholder="Enter  maximum number of people"
+                type="number" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input price">
+            <nz-input-group nzPrefixIcon="dollar">
+              <input formControlName="price" nz-input placeholder="Enter price" type="number" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <div class='selected-picture-container' *ngIf="selectedPicture | async">
+        <p>Selected Photo: </p>
+        <img [src]="selectedPicture | async" class='selected-picture'>
+      </div>
+      <br>
+      <button class="modal" nz-button nzType="primary" nzGhost (click)="openSearchWindow()"
+        *ngIf="checkAdminStatus | async">
+        <span>Select image</span>
+      </button>
+      <nz-modal nzFooter=' ' [(nzVisible)]="isVisibleSearch" nzTitle="Search image" (nzOnCancel)="cancel()">
+        <form [formGroup]="searchForm" (ngSubmit)="search()" nz-form novalidate>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input search Value">
+              <nz-input-group nzPrefixIcon="search">
+                <input formControlName="search" nz-input placeholder="enter value" type="text" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <button type="submit" nz-button nzType="primary">Search</button>
+        </form>
+        <div *ngIf="imgItem" nz-row>
+          <div *ngFor="let img of imgItem | async" class="img-item" nz-col nzSpan="12">
+            <br>
+            <img [src]="img" (click)="selectPicture($event)">
+          </div>
+        </div>
+      </nz-modal>
+    </nz-modal>
+    <button nz-button nzType="danger" (click)="logout()" nzGhost>Logout</button>
+  </div>
+</div>
