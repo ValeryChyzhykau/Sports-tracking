@@ -1,9 +1,10 @@
 import { UserStateActions, UserUnion } from '@core/state/actions/user.actions';
-import { AdminData } from '../../interfaces/admin-data.interface';
-import { UserData } from '../../interfaces/user-data.interface';
+import { AdminData } from '@modules/home/interfaces/admin-data.interface';
+import { UserData } from '@modules/home/interfaces/user-data.interface';
 
 export interface StateUser {
    reservationList: UserData[];
+   reservationHours: number[];
    selectedReservation: UserData;
    selectedGym: AdminData;
    defaultOpenValue: Date;
@@ -13,6 +14,7 @@ export const userNode = 'stateUser';
 
 export const initialState: StateUser = {
     reservationList: [],
+    reservationHours: [],
     selectedReservation: {},
     selectedGym: {
         gymName: '',
@@ -38,6 +40,12 @@ export const stateUser = (
             return {
                 ...state,
                 selectedReservation: action.payload,
+            };
+        }
+        case UserStateActions.GettingSelectedReservationSuccess: {
+            return {
+                ...state,
+                reservationHours: action.payload,
             };
         }
         case UserStateActions.GettingInformationAboutTheSelectedGym: {

@@ -2,7 +2,9 @@ import { AddNewGymEffect } from './add-new-gym.effect';
 import { AddNewReservationEffect } from './add-new-reservation.effect';
 import { DeleteGymEffect } from './delete-gym.effect';
 import { DeleteReservationEffect } from './delete-reservation.effect';
+import { GettingInformationUserEffect } from './getting-payload-reservation';
 import { LoadNewGymEffect } from './load-new-gym.effect';
+import { LoadReservationForDateClass } from './load-reservation-for-date.effect';
 import { LoadUnsplashImg } from './load-unsplash-img.effect';
 import { LoginRedirectEffect } from './login-redirect.effect';
 import { LoginEffects } from './login.effect';
@@ -30,4 +32,6 @@ export const effects = [
     AddNewReservationEffect,
     DeleteReservationEffect,
     UpdateReservationEffect,
+    GettingInformationUserEffect,
+    LoadReservationForDateClass,
 ];

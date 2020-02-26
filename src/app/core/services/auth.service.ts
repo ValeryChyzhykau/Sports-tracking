@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Unsubscribe } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../interfaces/user.interface';
+import { User } from '../../modules/auth/interfaces/user.interface';
 
 @Injectable()
 export class AuthService {

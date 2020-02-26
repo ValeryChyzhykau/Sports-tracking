@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
+import { User } from '@modules/auth/interfaces/user.interface';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
-import { User } from '../../interfaces/user.interface';
 import { AuthActionTypes, LogIn, LogInFailure, LogInSuccess } from '../actions/auth.actions';
 import { AppState } from '../reducers';
 

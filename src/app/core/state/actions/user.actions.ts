@@ -1,6 +1,6 @@
+import { AdminData } from '@modules/home/interfaces/admin-data.interface';
+import { UserData } from '@modules/home/interfaces/user-data.interface';
 import { Action } from '@ngrx/store';
-import { AdminData } from '../../interfaces/admin-data.interface';
-import { UserData } from '../../interfaces/user-data.interface';
 
 export enum UserStateActions {
     LoadReservationListFailed = '[User] LoadReservationListFailed',
@@ -17,7 +17,9 @@ export enum UserStateActions {
     UpdateReservationFailed = '[User] UpdateReservationFailed',
     GettingInformationAboutTheSelectedGym = '[User] GettingInformationAboutTheSelectedGym',
     GettingPrice = '[User]  GettingPrice',
-    GettingSelectedReservation = '[User] GettingSelectedId',
+    GettingSelectedReservation = '[User] GettingSelectedReservation',
+    GettingSelectedReservationSuccess = '[User] GettingSelectedReservationSuccess',
+    GettingSelectedReservationFailed = '[User] GettingSelectedReservationFailed',
 }
 
 export class LoadReservationList implements Action {
@@ -100,6 +102,16 @@ export class GettingSelectedReservation implements Action {
     UserStateActions. GettingSelectedReservation;
     constructor(public payload: UserData) {}
   }
+export class GettingSelectedReservationSuccess implements Action {
+    public readonly type: UserStateActions. GettingSelectedReservationSuccess =
+    UserStateActions. GettingSelectedReservationSuccess;
+    constructor(public payload: number[]) {}
+  }
+export class GettingSelectedReservationFailed implements Action {
+    public readonly type: UserStateActions. GettingSelectedReservationFailed =
+    UserStateActions. GettingSelectedReservationFailed;
+    constructor(public payload: Error) {}
+  }
 
 export type UserUnion =
 | LoadReservationList
@@ -115,4 +127,6 @@ export type UserUnion =
 | UpdateReservationSuccess
 | UpdateReservationFailed
 | GettingInformationAboutTheSelectedGym
-| GettingSelectedReservation;
+| GettingSelectedReservation
+| GettingSelectedReservationSuccess
+| GettingSelectedReservationFailed;

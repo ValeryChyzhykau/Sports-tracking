@@ -6,6 +6,7 @@ export const selectUnspalshFeature = createFeatureSelector<StateAdmin>(adminNode
 export const selectPictureFeature = createFeatureSelector<StateAdmin>(adminNode);
 export const LoadedGymsFeature = createFeatureSelector<StateAdmin>(adminNode);
 export const selectedIdFeature = createFeatureSelector<StateAdmin>(adminNode);
+export const blockedHoursFeature = createFeatureSelector<StateAdmin>(adminNode);
 
 export const selectAdminStateEvents = createSelector(
     selectAdminStateFeature,
@@ -30,4 +31,9 @@ export const LoadedGymsEvents = createSelector(
 export const selectedId = createSelector(
     selectedIdFeature,
     (state: StateAdmin): string => state.selectedId,
+);
+
+export const blockedHoursEvents = createSelector(
+    blockedHoursFeature,
+    (state: StateAdmin): number[] => state.blockedHours,
 );

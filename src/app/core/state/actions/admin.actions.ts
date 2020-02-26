@@ -1,5 +1,5 @@
+import { AdminData } from '@modules/home/interfaces/admin-data.interface';
 import { Action } from '@ngrx/store';
-import { AdminData } from '../../interfaces/admin-data.interface';
 
 export enum AdminStateActions {
     LoadAdminSuccess = '[Admin] LoadAdminSuccess',
@@ -23,6 +23,9 @@ export enum AdminStateActions {
     UpdateGym = '[Admin] UpdateGym',
     UpdateGymSuccess = '[Admin] UpdateGymSuccess',
     UpdateGymFailed = '[Admin] UpdateGymFailed',
+    ReservationLoadingForSelectedDate = '[Admin] ReservationLoadingForSelectedDate',
+    ReservationLoadingForSelectedDateSuccess = '[Admin] ReservationLoadingForSelectedDateSuccess',
+    ReservationLoadingForSelectedDateFailed = '[Admin] ReservationLoadingForSelectedDateFailed',
 }
 
 export class UpdateGym implements Action {
@@ -121,11 +124,6 @@ export class AddNewGymFailed implements Action {
     constructor(public payload: Error) {}
   }
 
-export class LoadImgUnsplash implements Action {
-  public readonly type: AdminStateActions.LoadImgUnsplash =
-    AdminStateActions.LoadImgUnsplash;
-}
-
 export class LoadImgUnsplashFailed implements Action {
   public readonly type: AdminStateActions.LoadImgUnsplashFailed =
     AdminStateActions.LoadImgUnsplashFailed;
@@ -144,6 +142,24 @@ export class SearchImgUnsplash implements Action {
   constructor(public payload: string) {}
 }
 
+export class ReservationLoadingForSelectedDate implements Action {
+  public readonly type: AdminStateActions.ReservationLoadingForSelectedDate =
+    AdminStateActions.ReservationLoadingForSelectedDate;
+  constructor( public date: string, public gymName: string) {}
+}
+
+export class ReservationLoadingForSelectedDateSuccess implements Action {
+  public readonly type: AdminStateActions.ReservationLoadingForSelectedDateSuccess =
+    AdminStateActions.ReservationLoadingForSelectedDateSuccess;
+    constructor( public payload: number[]) {}
+}
+
+export class ReservationLoadingForSelectedDateFailed implements Action {
+  public readonly type: AdminStateActions.ReservationLoadingForSelectedDateFailed =
+    AdminStateActions.ReservationLoadingForSelectedDateFailed;
+    constructor(public payload: Error) {}
+  }
+
 export type AdminUnion =
   | LoadAdmin
   | LoadAdminFailed
@@ -152,7 +168,6 @@ export type AdminUnion =
   | LoadGymListSuccess
   | LoadGymListFailed
   | AddNewGym
-  | LoadImgUnsplash
   | LoadImgUnsplashSuccess
   | LoadImgUnsplashFailed
   | SearchImgUnsplash
@@ -164,4 +179,7 @@ export type AdminUnion =
   | UpdateGym
   | UpdateGymSuccess
   | UpdateGymFailed
+  | ReservationLoadingForSelectedDateFailed
+  | ReservationLoadingForSelectedDateSuccess
+  | ReservationLoadingForSelectedDate
   | GettingIdentifier;

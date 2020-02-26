@@ -12,10 +12,10 @@ import { StoreModule } from '@ngrx/store';
 import { en_US, NgZorroAntdModule, NZ_I18N } from 'ng-zorro-antd';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 import { metaReducers, reducers } from './core/state/reducers';
-import { AuthModule } from './modules/auth.module';
-import { CoreModule } from './modules/core.module';
-import { HomeModule } from './modules/home.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { HomeModule } from './modules/home/home.module';
 // import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 registerLocaleData(en);

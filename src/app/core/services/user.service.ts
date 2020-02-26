@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
+import { AdminData } from '@modules/home/interfaces/admin-data.interface';
+import { UserData } from '@modules/home/interfaces/user-data.interface';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AdminData } from '../interfaces/admin-data.interface';
-import { UserData } from '../interfaces/user-data.interface';
 import { AuthState } from '../state/reducers/auth.reducers';
 import { StateUser } from '../state/reducers/user.reducers';
 import { selectAuthIdEvents } from '../state/selectors/auth.selectors';
@@ -20,20 +19,11 @@ export class UserService {
   constructor(private db: AngularFirestore, private store$: Store<AuthState>, private storeUser$: Store<StateUser>,
     ) {}
 
-  public getReservation(): Observable<UserData[]> {
+  public getReservation(): Observable<Array<DocumentChangeAction<UserData>>> {
     try {
       return this.db
         .collection(`reservations`)
-        .snapshotChanges()
-        .pipe(
-          map((actions: Array<DocumentChangeAction<UserData>>) => {
-            return actions.map((a: { payload: { doc: { data: () => UserData; id: string; }; }; }) => {
-              const data = a.payload.doc.data() as UserData;
-              const id = a.payload.doc.id as string;
-              return { id, ...data };
-            });
-          }),
-        );
+        .snapshotChanges();
     } catch (err) {
       alert(err.message);
     }
@@ -54,7 +44,6 @@ export class UserService {
         price = res.price;
         maximumNumberOfPeople = res.maximumNumberOfPeople;
       });
-      console.log(maximumNumberOfPeople);
       let resp: string;
       this.userId.subscribe((res: string) => (resp = res));
       return of(

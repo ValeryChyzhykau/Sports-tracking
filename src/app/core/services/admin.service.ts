@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
+import { AdminData } from '@modules/home/interfaces/admin-data.interface';
+import { UnspalshInterface } from '@modules/home/interfaces/unsplash.interface';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AdminData } from '../interfaces/admin-data.interface';
-import { UnspalshInterface } from '../interfaces/unsplash.interface';
 
 @Injectable()
 export class AdminService {

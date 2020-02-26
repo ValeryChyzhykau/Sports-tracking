@@ -1,7 +1,8 @@
-import { AdminData } from '../../interfaces/admin-data.interface';
+import { AdminData } from '@modules/home/interfaces/admin-data.interface';
 import { AdminStateActions, AdminUnion } from '../actions/admin.actions';
 
 export interface StateAdmin {
+    blockedHours: number[];
     adminState: boolean;
     imgArray: string[];
     searchValue: string;
@@ -14,6 +15,7 @@ export interface StateAdmin {
 export const adminNode = 'stateAdmin';
 
 export const initialState: StateAdmin = {
+    blockedHours: [],
     adminState: false,
     imgArray: [],
     searchValue: '',
@@ -33,6 +35,12 @@ export const stateAdmin = (
     action: AdminUnion,
 ): StateAdmin => {
     switch (action.type) {
+        case AdminStateActions.ReservationLoadingForSelectedDateSuccess: {
+            return {
+                ...state,
+                blockedHours:  action.payload,
+            };
+        }
         case AdminStateActions.GettingIdentifier: {
             return {
                 ...state,

@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
+import { ImageInterface } from '@modules/home/interfaces/image.interface';
+import { UnspalshInterface } from '@modules/home/interfaces/unsplash.interface';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { State, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { ImageInterface } from '../../interfaces/image.interface';
-import { UnspalshInterface } from '../../interfaces/unsplash.interface';
 import { AdminService } from '../../services/admin.service';
 import { AdminStateActions, LoadImgUnsplashFailed, LoadImgUnsplashSuccess, SearchImgUnsplash } from '../actions/admin.actions';
 import { AppState } from '../reducers';
