@@ -192,6 +192,9 @@ export class ContentComponent implements OnInit {
     return arr;
   }
   public disabledHours = (): number[] => this.getReservationHours();
+  public disabledDate = (value: Date): boolean => {
+    return value <= new Date();
+   }
   private maximumNumberPeopleValidator(): AsyncValidatorFn {
     return (
       control: AbstractControl,

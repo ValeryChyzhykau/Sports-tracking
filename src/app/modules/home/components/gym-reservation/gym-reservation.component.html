@@ -13,35 +13,35 @@
     <p>Reservation Date: {{userReservation.reservationDate}}</p>
     <button (click)="remove(userReservation.id)" nz-button nzType="danger" nzGhost>Delete</button>
     <button nz-button nzType="primary" nzGhost (click)="showModal(userReservation)">Update</button>
-    <nz-modal class='update-gym' nzTitle="Update Reservation" [(nzVisible)]="isVisible" (nzOnCancel)="cancel()"
-        (nzOnOk)="handleOk()" [nzOkDisabled]="updateReservationForm.invalid">
-        <form [formGroup]="updateReservationForm" (ngSubmit)="handleOk()" nz-form novalidate>
-        <nz-form-label>New Initial Time</nz-form-label>
-        <nz-time-picker  [nzAllowEmpty]="true"  [nzDefaultOpenValue]="defaultOpenValue | async" formControlName="from" [nzMinuteStep]="60"
-        nzFormat="HH:mm" [nzDisabledHours]="disabledHours" ></nz-time-picker>
-        <br>
-        <nz-form-label>New End Time</nz-form-label>
-        <nz-time-picker formControlName="to" [nzDefaultOpenValue]="defaultOpenValue | async" [nzMinuteStep]="60" nzFormat="HH:mm" [nzDisabledHours]="disabledHours"></nz-time-picker>
-            <div *ngIf = "updateReservationForm.controls['to'].invalid && updateReservationForm.controls['to'].touched">
-                <p style = 'color: red;'>The clock must not match or value to less value from </p>
-            </div>
-        <br>
-            <nz-form-label>Enter a new number of people</nz-form-label>
-            <nz-row>
-                <nz-col nzSpan="12">
-                  <nz-slider [nzMin]="1" [nzMax]="(selectedUsersReservation$ | async).maximumNumberOfPeople" formControlName="numberOfPeople"></nz-slider>
-                </nz-col>
-                <div nz-col nzSpan="4" >
-                  <nz-input-number
-                    [ngModel] = 'updateReservationForm.controls.numberOfPeople.value'
-                    [ngModelOptions]="{standalone: true}"
-                    [nzMin]="1"
-                    [nzMax]="(selectedUsersReservation$ | async).maximumNumberOfPeople"
-                    [ngStyle]="{ marginLeft: '16px' }"
-                  ></nz-input-number>
-                </div>
-              </nz-row>
-        </form>
-    </nz-modal>
     <hr>
+    <nz-modal class='update-gym' nzTitle="Update Reservation" [(nzVisible)]="isVisible" (nzOnCancel)="cancel()"
+    (nzOnOk)="handleOk()" [nzOkDisabled]="updateReservationForm.invalid">
+    <form [formGroup]="updateReservationForm" (ngSubmit)="handleOk()" nz-form novalidate>
+    <nz-form-label>New Initial Time</nz-form-label>
+    <nz-time-picker  [nzAllowEmpty]="true"  [nzDefaultOpenValue]="defaultOpenValue | async" formControlName="from" [nzMinuteStep]="60"
+    nzFormat="HH:mm" [nzDisabledHours]="disabledHours" ></nz-time-picker>
+    <br>
+    <nz-form-label>New End Time</nz-form-label>
+    <nz-time-picker formControlName="to" [nzDefaultOpenValue]="defaultOpenValue | async" [nzMinuteStep]="60" nzFormat="HH:mm" [nzDisabledHours]="disabledHours"></nz-time-picker>
+        <div *ngIf = "updateReservationForm.controls['to'].invalid && updateReservationForm.controls['to'].touched">
+            <p style = 'color: red;'>The clock must not match or value to less value from </p>
+        </div>
+    <br>
+        <nz-form-label>Enter a new number of people</nz-form-label>
+        <nz-row>
+            <nz-col nzSpan="12">
+              <nz-slider [nzMin]="1" [nzMax]="(selectedUsersReservation$ | async).maximumNumberOfPeople" formControlName="numberOfPeople"></nz-slider>
+            </nz-col>
+            <div nz-col nzSpan="4" >
+              <nz-input-number
+                [ngModel] = 'updateReservationForm.controls.numberOfPeople.value'
+                [ngModelOptions]="{standalone: true}"
+                [nzMin]="1"
+                [nzMax]="(selectedUsersReservation$ | async).maximumNumberOfPeople"
+                [ngStyle]="{ marginLeft: '16px' }"
+              ></nz-input-number>
+            </div>
+          </nz-row>
+    </form>
+</nz-modal>
 </div>
