@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AuthState } from '../reducers/auth.reducers';
 import { authState } from '../reducers/auth.reducers';
+import { User } from '@src/app/modules/auth/interfaces/user.interface';
 
 export const selectAuthFeature = createFeatureSelector<AuthState>(authState);
 export const selectAuthEmailFeature = createFeatureSelector<AuthState>(
@@ -10,7 +11,7 @@ export const selectAuthIdFeature = createFeatureSelector<AuthState>(authState);
 
 export const selectAuthEvents = createSelector(
   selectAuthFeature,
-  (state: AuthState): any => state.user
+  (state: AuthState): string => state.user
 );
 
 export const selectAuthIdEvents = createSelector(
