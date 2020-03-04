@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth-service/auth.service';
 })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {}
+
   public canActivate(): Observable<boolean> | boolean {
     const check = this.authService.checkStatus();
     return check.pipe(

@@ -39,24 +39,28 @@ export const stateUser = (
         reservationList: action.payload
       };
     }
+
     case UserStateActions.GettingSelectedReservationAction: {
       return {
         ...state,
         selectedReservation: action.payload
       };
     }
+
     case UserStateActions.GettingSelectedReservationSuccessAction: {
       return {
         ...state,
         reservationHours: action.payload
       };
     }
+
     case UserStateActions.GettingInformationAboutTheSelectedGymAction: {
       return {
         ...state,
         selectedGym: action.payload
       };
     }
+
     default:
       return state;
   }

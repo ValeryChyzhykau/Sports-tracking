@@ -34,42 +34,49 @@ export const stateAdmin = (
         blockedHours: action.payload
       };
     }
+
     case AdminStateActions.GettingIdentifierAction: {
       return {
         ...state,
         selectedId: action.id
       };
     }
+
     case AdminStateActions.LoadGymListSuccessAction: {
       return {
         ...state,
         receivedGyms: action.payload
       };
     }
+
     case AdminStateActions.LoadAdminSuccessAction: {
       return {
         ...state,
         adminState: action.payload
       };
     }
+
     case AdminStateActions.SearchImagesUnsplashAction: {
       return {
         ...state,
         searchValue: action.payload
       };
     }
+
     case AdminStateActions.LoadImagesUnsplashSuccessAction: {
       return {
         ...state,
         imgArray: action.payload
       };
     }
+
     case AdminStateActions.AddingNewPictureAction: {
       return {
         ...state,
         selectedPicture: action.payload
       };
     }
+
     default:
       return state;
   }

@@ -82,7 +82,6 @@ export class AuthService {
       return this.afAuth.auth.onAuthStateChanged((user: firebase.User) => {
         user.getIdTokenResult(true).then((res: firebase.auth.IdTokenResult) => {
           localStorage.setItem('userToken', JSON.stringify(res.token));
-          return res.token;
         });
       });
     } catch (err) {

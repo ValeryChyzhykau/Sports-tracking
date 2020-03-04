@@ -20,9 +20,9 @@ export class AdminService {
     maximumNumberOfPeople: number,
     price: number,
     img: string
-  ): Observable<Promise<DocumentReference>> {
+  ): Observable<DocumentReference> {
     try {
-      return of(
+      return from(
         this.dataBase.collection('admin').add({
           gymName,
           maximumNumberOfPeople,

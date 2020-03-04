@@ -26,6 +26,7 @@ export const authInformation = (
         id: action.payload.id
       };
     }
+
     case AuthActionTypes.LogoutSuccessAction: {
       return {
         ...state,
@@ -33,6 +34,7 @@ export const authInformation = (
         id: action.payload.id
       };
     }
+
     case AuthActionTypes.SignUpSuccessAction: {
       return {
         ...state,
@@ -40,6 +42,7 @@ export const authInformation = (
         id: action.payload.id
       };
     }
+
     default: {
       return state;
     }
