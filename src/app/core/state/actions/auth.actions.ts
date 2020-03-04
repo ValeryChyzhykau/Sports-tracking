@@ -1,89 +1,96 @@
 import { Action } from '@ngrx/store';
 
 export enum AuthActionTypes {
-  Login = '[Auth] Login',
-  LoginSuccess = '[Auth] Login Success',
-  LoginFailure = '[Auth] Login Failure',
-  Logout = '[Auth] Logout',
-  LogoutSuccess = '[Auth] LogoutSuccess',
-  LogoutFailed = '[Auth] Logout LogoutFailed',
-  LoginRedirect = '[Auth] Login Redirect',
-  SignUp = '[Auth] Sign Up',
-  SignUpSuccess = '[Auth] Sign Up Success',
-  SignUpFailure = '[Auth] Sign Up Failure',
-  HomeRedirect = '[Auth] Home Redirect',
+  LoginAction = '[Auth] LoginAction',
+  LoginSuccessAction = '[Auth] Login SuccessAction',
+  LoginFailureAction = '[Auth] Login FailureAction',
+  LogoutAction = '[Auth] LogoutAction',
+  LogoutSuccessAction = '[Auth] LogoutSuccessAction',
+  LogoutFailedAction = '[Auth] Logout LogoutFailedAction',
+  LoginRedirectAction = '[Auth] Login RedirectAction',
+  SignUpAction = '[Auth] Sign UpAction',
+  SignUpSuccessAction = '[Auth] Sign Up SuccessAction',
+  SignUpFailureAction = '[Auth] Sign Up FailureAction',
+  HomeRedirectAction = '[Auth] Home RedirectAction'
 }
 
-export class HomeRedirect implements Action {
-  public readonly type: AuthActionTypes.HomeRedirect = AuthActionTypes.HomeRedirect;
+export class HomeRedirectAction implements Action {
+  public readonly type: AuthActionTypes.HomeRedirectAction =
+    AuthActionTypes.HomeRedirectAction;
 }
 
-export class LogIn implements Action {
-  public readonly type: AuthActionTypes.Login = AuthActionTypes.Login;
+export class LogInAction implements Action {
+  public readonly type: AuthActionTypes.LoginAction =
+    AuthActionTypes.LoginAction;
   constructor(public payload: { email: string; password: string }) {}
 }
 
-export class LogInSuccess implements Action {
-  public readonly type: AuthActionTypes.LoginSuccess =
-    AuthActionTypes.LoginSuccess;
-  constructor(public payload: {id: string, user: string, email: string}) {}
+export class LogInSuccessAction implements Action {
+  public readonly type: AuthActionTypes.LoginSuccessAction =
+    AuthActionTypes.LoginSuccessAction;
+  constructor(public payload: { id: string; user: string; email: string }) {}
 }
 
-export class LogInFailure implements Action {
-  public readonly type: AuthActionTypes.LoginFailure =
-    AuthActionTypes.LoginFailure;
-    constructor(public payload: Error) {}
-}
-
-export class LogOut implements Action {
-  public readonly type: AuthActionTypes.Logout = AuthActionTypes.Logout;
-}
-export class LogoutSuccess implements Action {
-  public readonly type: AuthActionTypes.LogoutSuccess = AuthActionTypes.LogoutSuccess;
-  constructor(public payload: {id: null, user: null }) {}
-}
-export class LogoutFailed  implements Action {
-  public readonly type: AuthActionTypes.LogoutFailed  = AuthActionTypes.LogoutFailed;
+export class LogInFailureAction implements Action {
+  public readonly type: AuthActionTypes.LoginFailureAction =
+    AuthActionTypes.LoginFailureAction;
   constructor(public payload: Error) {}
-
 }
 
-export class LoginRedirect implements Action {
-  public readonly type: AuthActionTypes.LoginRedirect =
-    AuthActionTypes.LoginRedirect;
+export class LogOutAction implements Action {
+  public readonly type: AuthActionTypes.LogoutAction =
+    AuthActionTypes.LogoutAction;
+}
+export class LogoutSuccessAction implements Action {
+  public readonly type: AuthActionTypes.LogoutSuccessAction =
+    AuthActionTypes.LogoutSuccessAction;
+  constructor(public payload: { id: null; user: null }) {}
+}
+export class LogoutFailedAction implements Action {
+  public readonly type: AuthActionTypes.LogoutFailedAction =
+    AuthActionTypes.LogoutFailedAction;
+  constructor(public payload: Error) {}
 }
 
-export class SignUp implements Action {
-  public readonly type: AuthActionTypes.SignUp = AuthActionTypes.SignUp;
-  constructor(public auth: {
-    email: string,
-    password: string;
-    phone: number;
-    userName: string;
-    login: string;
-  }) {}
+export class LoginRedirectAction implements Action {
+  public readonly type: AuthActionTypes.LoginRedirectAction =
+    AuthActionTypes.LoginRedirectAction;
 }
 
-export class SignUpSuccess implements Action {
-  public readonly type: AuthActionTypes.SignUpSuccess =
-    AuthActionTypes.SignUpSuccess;
-    constructor(public payload: {id: string, user: string, email: string}) {}
+export class SignUpAction implements Action {
+  public readonly type: AuthActionTypes.SignUpAction =
+    AuthActionTypes.SignUpAction;
+  constructor(
+    public auth: {
+      email: string;
+      password: string;
+      phone: number;
+      userName: string;
+      login: string;
+    }
+  ) {}
 }
 
-export class SignUpFailure implements Action {
-  public readonly type: AuthActionTypes.SignUpFailure =
-    AuthActionTypes.SignUpFailure;
-    constructor(public payload: Error) {}
+export class SignUpSuccessAction implements Action {
+  public readonly type: AuthActionTypes.SignUpSuccessAction =
+    AuthActionTypes.SignUpSuccessAction;
+  constructor(public payload: { id: string; user: string; email: string }) {}
 }
 
-export type All =
-  | LogIn
-  | LogInSuccess
-  | LogInFailure
-  | LogOut
-  | LoginRedirect
-  | SignUp
-  | SignUpSuccess
-  | SignUpFailure
-  | LogoutSuccess
-  | LogoutFailed;
+export class SignUpFailureAction implements Action {
+  public readonly type: AuthActionTypes.SignUpFailureAction =
+    AuthActionTypes.SignUpFailureAction;
+  constructor(public payload: Error) {}
+}
+
+export type AuthActionsUnion =
+  | LogInAction
+  | LogInSuccessAction
+  | LogInFailureAction
+  | LogOutAction
+  | LoginRedirectAction
+  | SignUpAction
+  | SignUpSuccessAction
+  | SignUpFailureAction
+  | LogoutSuccessAction
+  | LogoutFailedAction;

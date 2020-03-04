@@ -1,4 +1,3 @@
-
 export interface ImageInterface {
-    small: string;
-  }
+  small: string;
+}

@@ -1,104 +1,142 @@
 <div id="content-container">
-    <br>
-    <div *ngIf="gyms" nz-row nzType="flex" nzJustify="center" nzAlign="top">
-        <div *ngFor="let gym of gyms | async" nz-col nzSpan="12" class="content-block">
-            <br>
-            <img [src]="gym.img" alt="Picture Gym">
-            <h2>{{gym.gymName}}</h2>
-            <p>Capacity: {{gym.maximumNumberOfPeople}} people</p>
-            <p>Price per hour: {{gym.price}} $</p>
-            <button nz-button nzType="danger" (click)="remove(gym)" nzGhost *ngIf="checkAdminStatus | async">Delete
-                Gym</button>
-            <button nz-button nzType="primary" nzGhost *ngIf="checkAdminStatus | async" (click)="showModal(gym)">Update
-                Info Gym</button>
-            <br>
-            <button nz-button nzType="primary" nzGhost (click)="openOrderWindow(gym)">To оrder...</button>
-        </div>
-        <nz-modal class='update-gym' nzTitle="Update Gym" [(nzVisible)]="isVisible" (nzOnCancel)="handleCancel()"
-            (nzOnOk)="handleOk()" [nzOkDisabled]="updateGymForm.invalid">
-            <form [formGroup]="updateGymForm" (ngSubmit)="handleOk()" nz-form novalidate>
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Please input Gym Name">
-                        <nz-input-group nzPrefixIcon="audit">
-                            <input formControlName="gymName" nz-input placeholder="Enter Gym Name" type="text" />
-                        </nz-input-group>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Please input maximum number of people">
-                        <nz-input-group nzPrefixIcon="team">
-                            <input formControlName="maximumNumberOfPeople" nz-input
-                                placeholder="Enter  maximum number of people" type="number" />
-                        </nz-input-group>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Please input price">
-                        <nz-input-group nzPrefixIcon="dollar">
-                            <input formControlName="price" nz-input placeholder="Enter price" type="number" />
-                        </nz-input-group>
-                    </nz-form-control>
-                </nz-form-item>
-            </form>
-            <div class='selected-picture-container' *ngIf="selectedPicture | async">
-                <p>Selected Photo: </p>
-                <img [src]="selectedPicture | async" class='selected-picture'>
-            </div>
-            <br>
-            <button class="modal" nz-button nzType="primary" nzGhost (click)="openSearchWindow()"
-                *ngIf="checkAdminStatus | async">
-                <span>Select image</span>
-            </button>
-            <nz-modal nzFooter=' ' [(nzVisible)]="isVisibleSearch" nzTitle="Search image" (nzOnCancel)="cancel()">
-                <form [formGroup]="searchForm" (ngSubmit)="search()" nz-form novalidate>
-                    <nz-form-item>
-                        <nz-form-control nzErrorTip="Please input search Value">
-                            <nz-input-group nzPrefixIcon="search">
-                                <input formControlName="search" nz-input placeholder="enter value" type="text" />
-                            </nz-input-group>
-                        </nz-form-control>
-                    </nz-form-item>
-                    <button type="submit" nz-button nzType="primary">Search</button>
-                </form>
-                <div *ngIf="imgItem" nz-row>
-                    <div *ngFor="let img of imgItem | async" class="img-item" nz-col nzSpan="12">
-                        <br>
-                        <img [src]="img" alt="gym" (click)="selectPicture($event)" />
-                    </div>
-                </div>
-            </nz-modal>
-        </nz-modal>
-        <nz-modal [(nzVisible)]="isVisibleOrder" nzTitle="Reservation" (nzOnOk)="confirmReservation()"
-            (nzOnCancel)="cancelReservation()" [nzOkDisabled]="reservationForm.invalid">
-            <form [formGroup]="reservationForm" (ngSubmit)="confirmReservation()" nz-form novalidate>
-                <nz-form-label>Select Date</nz-form-label>
-                <nz-date-picker [nzDisabledDate]="disabledDate" formControlName="reservationDate"
-                    (ngModelChange)="onTitleChange($event)" nzFormat="yyyy/MM/dd" nzPlaceHolder="Select date">
-                </nz-date-picker>
-                <br>
-                <nz-form-label>Initial Time</nz-form-label>
-                <nz-time-picker [nzAllowEmpty]="true" [nzDisabledHours]="disabledHours"
-                    [nzDefaultOpenValue]="defaultOpenValue | async" formControlName="from" [nzMinuteStep]="60"
-                    nzFormat="HH:mm"></nz-time-picker>
-                <br>
-                <nz-form-label>End Time</nz-form-label>
-                <nz-time-picker formControlName="to" [nzDisabledHours]="disabledHours"
-                    [nzDefaultOpenValue]="defaultOpenValue | async" [nzMinuteStep]="60" nzFormat="HH:mm">
-                </nz-time-picker>
-                <div *ngIf="reservationForm.controls['to'].invalid && reservationForm.controls['to'].touched">
-                    <p style='color: red;'>The clock must not match or value to less value from </p>
-                </div>
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Please input number peoples or you indicated too many people">
-                        <nz-form-label> Number peoples</nz-form-label>
-                        <nz-input-group nzPrefixIcon="team">
-                            <input formControlName="numberOfPeople" nz-input
-                                placeholder="enter number peoples (max: {{(selectedGym$ | async).maximumNumberOfPeople }})"
-                                type="number" />
-                        </nz-input-group>
-                    </nz-form-control>
-                </nz-form-item>
-            </form>
-        </nz-modal>
+  <br />
+  <div *ngIf="loadedGyms" nz-row nzType="flex" nzJustify="center" nzAlign="top">
+    <div *ngFor="let gym of loadedGyms | async" nz-col nzSpan="12" class="content-block">
+      <br />
+      <img [src]="gym.img" alt="Picture Gym" />
+      <h2>{{ gym.gymName }}</h2>
+      <p>Capacity: {{ gym.maximumNumberOfPeople }} people</p>
+      <p>Price per hour: {{ gym.price }} $</p>
+      <button nz-button nzType="danger" (click)="remove(gym)" nzGhost *ngIf="checkAdminStatus | async">
+        Delete Gym
+      </button>
+      <button nz-button nzType="primary" nzGhost *ngIf="checkAdminStatus | async" (click)="showModal(gym)">
+        Update Info Gym
+      </button>
+      <br />
+      <button nz-button nzType="primary" nzGhost (click)="openOrderWindow(gym)">
+        To оrder...
+      </button>
     </div>
+    <nz-modal
+      class="update-gym"
+      nzTitle="Update Gym"
+      [(nzVisible)]="isVisible"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+      [nzOkDisabled]="updateGymForm.invalid"
+    >
+      <form [formGroup]="updateGymForm" (ngSubmit)="handleOk()" nz-form novalidate>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input Gym Name">
+            <nz-input-group nzPrefixIcon="audit">
+              <input formControlName="gymName" nz-input placeholder="Enter Gym Name" type="text" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input maximum number of people">
+            <nz-input-group nzPrefixIcon="team">
+              <input
+                formControlName="maximumNumberOfPeople"
+                nz-input
+                placeholder="Enter  maximum number of people"
+                type="number"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input price">
+            <nz-input-group nzPrefixIcon="dollar">
+              <input formControlName="price" nz-input placeholder="Enter price" type="number" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <div class="selected-picture-container" *ngIf="selectedPicture | async">
+        <p>Selected Photo:</p>
+        <img [src]="selectedPicture | async" class="selected-picture" />
+      </div>
+      <br />
+      <button class="modal" nz-button nzType="primary" nzGhost (click)="openSearchWindow()" *ngIf="checkAdminStatus | async">
+        <span>Select image</span>
+      </button>
+      <nz-modal nzFooter=" " [(nzVisible)]="isVisibleSearch" nzTitle="Search image" (nzOnCancel)="cancel()">
+        <form [formGroup]="searchForm" (ngSubmit)="search()" nz-form novalidate>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input search Value">
+              <nz-input-group nzPrefixIcon="search">
+                <input formControlName="search" nz-input placeholder="enter value" type="text" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <button type="submit" nz-button nzType="primary">Search</button>
+        </form>
+        <div *ngIf="imgItem" nz-row>
+          <div *ngFor="let img of imgItem | async" class="img-item" nz-col nzSpan="12">
+            <br />
+            <img [src]="img" alt="gym" (click)="selectPicture($event)" />
+          </div>
+        </div>
+      </nz-modal>
+    </nz-modal>
+    <nz-modal
+      [(nzVisible)]="isVisibleOrder"
+      nzTitle="Reservation"
+      (nzOnOk)="confirmReservation()"
+      (nzOnCancel)="cancelReservation()"
+      [nzOkDisabled]="reservationForm.invalid"
+    >
+      <form [formGroup]="reservationForm" (ngSubmit)="confirmReservation()" nz-form novalidate>
+        <nz-form-label>Select Date</nz-form-label>
+        <nz-date-picker
+          [nzDisabledDate]="disabledDate"
+          formControlName="reservationDate"
+          (ngModelChange)="onTitleChange($event)"
+          nzFormat="yyyy/MM/dd"
+          nzPlaceHolder="Select date"
+        >
+        </nz-date-picker>
+        <br />
+        <nz-form-label>Initial Time</nz-form-label>
+        <nz-time-picker
+          [nzAllowEmpty]="true"
+          [nzDisabledHours]="disabledHours"
+          [nzDefaultOpenValue]="defaultOpenValue | async"
+          formControlName="initialTime"
+          [nzMinuteStep]="60"
+          nzFormat="HH:mm"
+        ></nz-time-picker>
+        <br />
+        <nz-form-label>End Time</nz-form-label>
+        <nz-time-picker
+          formControlName="endTime"
+          [nzDisabledHours]="disabledHours"
+          [nzDefaultOpenValue]="defaultOpenValue | async"
+          [nzMinuteStep]="60"
+          nzFormat="HH:mm"
+        >
+        </nz-time-picker>
+        <div *ngIf="reservationForm.controls['endTime'].invalid && reservationForm.controls['endTime'].touched">
+          <p style="color: red;">
+            The clock must not match or value to less value from
+          </p>
+        </div>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input number peoples or you indicated too many people">
+            <nz-form-label> Number peoples</nz-form-label>
+            <nz-input-group nzPrefixIcon="team">
+              <input
+                formControlName="numberOfPeople"
+                nz-input
+                placeholder="enter number peoples (max: {{ (selectedGym$ | async).maximumNumberOfPeople }})"
+                type="number"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-modal>
+  </div>
 </div>

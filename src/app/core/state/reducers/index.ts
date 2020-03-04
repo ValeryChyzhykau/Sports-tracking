@@ -5,17 +5,17 @@ import { authInformation, authState, AuthState } from './auth.reducers';
 import { StateUser, stateUser, userNode } from './user.reducers';
 
 export interface AppState {
-     [authState]: AuthState;
-     [adminNode]: StateAdmin;
-     [userNode]: StateUser;
+  [authState]: AuthState;
+  [adminNode]: StateAdmin;
+  [userNode]: StateUser;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-    [authState]: authInformation,
-    [adminNode]: stateAdmin,
-    [userNode]: stateUser,
+  [authState]: authInformation,
+  [adminNode]: stateAdmin,
+  [userNode]: stateUser
 };
 
-export const metaReducers: Array<MetaReducer<AppState>> = !environment.production
-  ? []
-  : [];
+export const metaReducers: Array<MetaReducer<
+  AppState
+>> = !environment.production ? [] : [];

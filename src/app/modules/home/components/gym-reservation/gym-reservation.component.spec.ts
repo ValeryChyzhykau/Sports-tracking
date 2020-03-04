@@ -8,9 +8,8 @@ describe('GymReservationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GymReservationComponent ]
-    })
-    .compileComponents();
+      declarations: [GymReservationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

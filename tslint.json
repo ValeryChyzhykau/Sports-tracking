@@ -1,8 +1,9 @@
 {
   "defaultSeverity": "error",
-  "extends": ["tslint:recommended"],
+  "extends": ["tslint-plugin-prettier"],
   "jsRules": {},
   "rules": {
+    "prettier": true,
     "quotemark": false,
     "no-var-requires": false,
     "interface-name": [true, "never-prefix"],

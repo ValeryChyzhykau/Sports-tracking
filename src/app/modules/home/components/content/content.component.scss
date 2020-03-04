@@ -1,33 +1,28 @@
 img {
-    width: 50%;
-    height: 50%;
+  width: 50%;
+  height: 50%;
 }
 #content-container {
-    margin-left: 13%;
-    height: 100vh;
+  margin-left: 13%;
+  height: 100vh;
 
-    .content-block {
-        transition: 1s;
-        h2 {
-            font-family: 'Stencil Std', fantasy;
-            margin-top: 5px;
-            color: #1E90FF;
-        }
-        p {
-            font-family: 'Chalkduster', fantasy	;
-            margin-top: 5px;
-            font-size: 18px;  
-            color: #48D1CC;
-        }
-
+  .content-block {
+    transition: 1s;
+    h2 {
+      font-family: 'Stencil Std', fantasy;
+      margin-top: 5px;
+      color: #1e90ff;
     }
-
-    .content-block:hover {
-        background-color: grey;
-        opacity: 0.8;
+    p {
+      font-family: 'Chalkduster', fantasy;
+      margin-top: 5px;
+      font-size: 18px;
+      color: #48d1cc;
     }
+  }
 
-   
+  .content-block:hover {
+    background-color: grey;
+    opacity: 0.8;
+  }
 }
-
-

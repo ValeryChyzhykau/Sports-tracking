@@ -1,88 +1,76 @@
-import { AdminData } from '@modules/home/interfaces/admin-data.interface';
-import { AdminStateActions, AdminUnion } from '../actions/admin.actions';
+import { AdminModel } from '@src/app/modules/home/interfaces/admin-model.interface';
+import { AdminStateActions, AdminActionsUnion } from '../actions/admin.actions';
 
 export interface StateAdmin {
-    blockedHours: number[];
-    adminState: boolean;
-    imgArray: string[];
-    searchValue: string;
-    selectedPicture: string;
-    newGym: AdminData;
-    receivedGyms: AdminData[];
-    selectedId: string;
+  blockedHours: number[];
+  adminState: boolean;
+  imgArray: string[];
+  searchValue: string;
+  selectedPicture: string;
+  receivedGyms: AdminModel[];
+  selectedId: string;
 }
 
 export const adminNode = 'stateAdmin';
 
 export const initialState: StateAdmin = {
-    blockedHours: [],
-    adminState: false,
-    imgArray: [],
-    searchValue: '',
-    selectedPicture: '',
-    newGym: {
-        gymName: '',
-        maximumNumberOfPeople: 0,
-        img: '',
-        price: 0,
-    },
-    receivedGyms: [],
-    selectedId: '',
+  blockedHours: [],
+  adminState: false,
+  imgArray: [],
+  searchValue: '',
+  selectedPicture: '',
+  receivedGyms: [],
+  selectedId: ''
 };
 
 export const stateAdmin = (
-    state = initialState,
-    action: AdminUnion,
+  state = initialState,
+  action: AdminActionsUnion
 ): StateAdmin => {
-    switch (action.type) {
-        case AdminStateActions.ReservationLoadingForSelectedDateSuccess: {
-            return {
-                ...state,
-                blockedHours:  action.payload,
-            };
-        }
-        case AdminStateActions.GettingIdentifier: {
-            return {
-                ...state,
-                selectedId:  action.id,
-            };
-        }
-        case AdminStateActions.LoadGymListSuccess: {
-            return {
-                ...state,
-                receivedGyms: action.payload,
-            };
-        }
-        case AdminStateActions.AddNewGym: {
-            return {
-                ...state,
-                newGym: action.payload,
-            };
-        }
-        case AdminStateActions.LoadAdminSuccess: {
-            return {
-                ...state,
-                adminState: action.payload,
-            };
-        }
-        case AdminStateActions.SearchImgUnsplash: {
-            return {
-                ...state,
-                searchValue: action.payload,
-            };
-        }
-        case AdminStateActions.LoadImgUnsplashSuccess: {
-            return {
-                ...state,
-                imgArray: action.payload,
-            };
-        }
-        case AdminStateActions.AddingNewPicture: {
-            return {
-                ...state,
-                selectedPicture: action.payload,
-            };
-        }
-        default: return state;
+  switch (action.type) {
+    case AdminStateActions.ReservationLoadingForSelectedDateSuccessAction: {
+      return {
+        ...state,
+        blockedHours: action.payload
+      };
     }
+    case AdminStateActions.GettingIdentifierAction: {
+      return {
+        ...state,
+        selectedId: action.id
+      };
+    }
+    case AdminStateActions.LoadGymListSuccessAction: {
+      return {
+        ...state,
+        receivedGyms: action.payload
+      };
+    }
+    case AdminStateActions.LoadAdminSuccessAction: {
+      return {
+        ...state,
+        adminState: action.payload
+      };
+    }
+    case AdminStateActions.SearchImagesUnsplashAction: {
+      return {
+        ...state,
+        searchValue: action.payload
+      };
+    }
+    case AdminStateActions.LoadImagesUnsplashSuccessAction: {
+      return {
+        ...state,
+        imgArray: action.payload
+      };
+    }
+    case AdminStateActions.AddingNewPictureAction: {
+      return {
+        ...state,
+        selectedPicture: action.payload
+      };
+    }
+    default:
+      return state;
+  }
 };

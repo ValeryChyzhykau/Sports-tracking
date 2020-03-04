@@ -1,59 +1,63 @@
-import { UserStateActions, UserUnion } from '@core/state/actions/user.actions';
-import { AdminData } from '@modules/home/interfaces/admin-data.interface';
-import { UserData } from '@modules/home/interfaces/user-data.interface';
+import {
+  UserStateActions,
+  UserActionsUnion
+} from '@core/state/actions/user.actions';
+import { AdminModel } from '@src/app/modules/home/interfaces/admin-model.interface';
+import { UserModel } from '@src/app/modules/home/interfaces/user-model.interface';
 
 export interface StateUser {
-   reservationList: UserData[];
-   reservationHours: number[];
-   selectedReservation: UserData;
-   selectedGym: AdminData;
-   defaultOpenValue: Date;
+  reservationList: UserModel[];
+  reservationHours: number[];
+  selectedReservation: UserModel;
+  selectedGym: AdminModel;
+  defaultOpenValue: Date;
 }
 
 export const userNode = 'stateUser';
 
 export const initialState: StateUser = {
-    reservationList: [],
-    reservationHours: [],
-    selectedReservation: {},
-    selectedGym: {
-        gymName: '',
-        img: '',
-        maximumNumberOfPeople: 0,
-        price: 0,
-    },
-    defaultOpenValue: new Date(0, 0, 0, 0, 0, 0),
+  reservationList: [],
+  reservationHours: [],
+  selectedReservation: {},
+  selectedGym: {
+    gymName: '',
+    img: '',
+    maximumNumberOfPeople: 0,
+    price: 0
+  },
+  defaultOpenValue: new Date(0, 0, 0, 0, 0, 0)
 };
 
 export const stateUser = (
-    state = initialState,
-    action: UserUnion,
+  state = initialState,
+  action: UserActionsUnion
 ): StateUser => {
-    switch (action.type) {
-        case UserStateActions.LoadReservationListSuccess: {
-            return {
-                ...state,
-                reservationList: action.payload,
-            };
-        }
-        case UserStateActions.GettingSelectedReservation: {
-            return {
-                ...state,
-                selectedReservation: action.payload,
-            };
-        }
-        case UserStateActions.GettingSelectedReservationSuccess: {
-            return {
-                ...state,
-                reservationHours: action.payload,
-            };
-        }
-        case UserStateActions.GettingInformationAboutTheSelectedGym: {
-            return {
-                ...state,
-                selectedGym: action.payload,
-            };
-        }
-         default: return state;
+  switch (action.type) {
+    case UserStateActions.LoadReservationListSuccessAction: {
+      return {
+        ...state,
+        reservationList: action.payload
+      };
     }
+    case UserStateActions.GettingSelectedReservationAction: {
+      return {
+        ...state,
+        selectedReservation: action.payload
+      };
+    }
+    case UserStateActions.GettingSelectedReservationSuccessAction: {
+      return {
+        ...state,
+        reservationHours: action.payload
+      };
+    }
+    case UserStateActions.GettingInformationAboutTheSelectedGymAction: {
+      return {
+        ...state,
+        selectedGym: action.payload
+      };
+    }
+    default:
+      return state;
+  }
 };

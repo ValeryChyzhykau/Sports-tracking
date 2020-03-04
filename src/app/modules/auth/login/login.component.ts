@@ -1,61 +1,81 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { LogIn, SignUp } from '@src/app/core/state/actions/auth.actions';
+import {
+  LogInAction,
+  SignUpAction
+} from '@src/app/core/state/actions/auth.actions';
 import { AuthState } from '@src/app/core/state/reducers/auth.reducers';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public signUpForm: FormGroup;
   public isVisible: boolean = false;
-  constructor(
-    private store$: Store<AuthState>,
-    private fb: FormBuilder,
-  ) {}
-  public submit(): void {
+  constructor(private store$: Store<AuthState>, private fb: FormBuilder) {}
+
+  public login(): void {
     try {
-      const payload = {
-        email: this.loginForm.controls.userEmail.value,
-        password: this.loginForm.controls.userPassword.value,
-      };
-      this.store$.dispatch(new LogIn(payload));
+      const { userEmail, userPassword } = this.loginForm.value;
+      this.store$.dispatch(
+        new LogInAction({ email: userEmail, password: userPassword })
+      );
     } catch (err) {
       alert(err);
     }
   }
+
   public signUp(): void {
-    const payload = {
-      email: this.signUpForm.controls.userEmail.value,
-      password:  this.signUpForm.controls.userPassword.value,
-      phone: this.signUpForm.controls.userPhone.value,
-      login:  this.signUpForm.controls.userLogin.value,
-      userName:  this.signUpForm.controls.userName.value,
-    };
-    this.store$.dispatch( new SignUp(payload));
+    const {
+      userEmail,
+      userPassword,
+      userPhone,
+      userLogin,
+      userName
+    } = this.signUpForm.value;
+    this.store$.dispatch(
+      new SignUpAction({
+        email: userEmail,
+        password: userPassword,
+        phone: userPhone,
+        login: userLogin,
+        userName
+      })
+    );
     this.isVisible = false;
   }
+
   public ngOnInit(): void {
     this.loginForm = this.fb.group({
       userEmail: [null, [Validators.required, Validators.email]],
-      userPassword: [null, [Validators.required, Validators.minLength(6)]],
+      userPassword: [null, [Validators.required, Validators.minLength(6)]]
     });
     this.signUpForm = this.fb.group({
       userEmail: [null, [Validators.required, Validators.email]],
       userPassword: [null, [Validators.required, Validators.minLength(6)]],
       userPhone: [null, [Validators.pattern('[0-9]{9}'), Validators.required]],
       userLogin: [null, [Validators.required]],
-      userName: [null, [Validators.required]],
+      userName: [null, [Validators.required]]
     });
   }
+
   public showModal(): void {
     this.isVisible = true;
   }
+
   public handleCancel(): void {
     this.isVisible = false;
   }
 }
+
+// public signUp(): void {
+//   const {userEmail, userName, userLogin, userPassword, userPhone} =  this.signUpForm.value;
+//   this.service.signUp(userEmail, userPassword, userName, userLogin, userPhone)
+//     .then(() => this.router.navigate(['/home']))
+//     .then(() => this.dialogRef.close())
+//     .catch(error => alert( error.message));
+// }
