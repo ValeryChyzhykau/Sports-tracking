@@ -123,15 +123,15 @@ export class ContentComponent implements OnInit {
       gymName,
       maximumNumberOfPeople,
       price,
-      picture
-    } = this.updateGymForm.value;
-    this.selectedPicture.subscribe((response: string) => (picture = response));
+      img
+    }: AdminModel = this.updateGymForm.value;
+    this.selectedPicture.subscribe((response: string) => (img = response));
     this.storeAdmin$.dispatch(
       new UpdateGymAction(id, {
         gymName,
         maximumNumberOfPeople,
         price,
-        img: picture
+        img
       })
     );
     this.updateGymForm.reset();
@@ -166,7 +166,7 @@ export class ContentComponent implements OnInit {
       endTime,
       reservationDate,
       numberOfPeople
-    } = this.reservationForm.value;
+    }: UserModel = this.reservationForm.value;
     this.selectedGym$.subscribe(
       (response: { price: number; gymName: string }) => {
         price = response.price;
@@ -179,7 +179,7 @@ export class ContentComponent implements OnInit {
     paymentAmount = price * (endTime - initialTime);
     this.storeUser$.dispatch(
       new CreateNewReservationAction({
-        gym: gymName,
+        gymName,
         email: localStorage.getItem('userEmail'),
         paymentAmount,
         reservationDate,

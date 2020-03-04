@@ -53,10 +53,12 @@ export class GymEffect {
         )
         .pipe(map(() => new CreateNewGymSuccessAction()));
     }),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new CreateNewGymFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new CreateNewGymFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -67,10 +69,12 @@ export class GymEffect {
         .deleteGym(data.id)
         .pipe(map(() => new RemoveGymSuccessAction()))
     ),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new RemoveGymFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new RemoveGymFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -83,10 +87,12 @@ export class GymEffect {
         })
       )
     ),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new LoadGymListFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new LoadGymListFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -103,10 +109,12 @@ export class GymEffect {
         })
       );
     }),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new LoadImagesUnsplashFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new LoadImagesUnsplashFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -125,10 +133,12 @@ export class GymEffect {
         })
       ).pipe(map((data: boolean) => new LoadAdminSuccessAction(data)))
     ),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new LoadAdminFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new LoadAdminFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -139,10 +149,12 @@ export class GymEffect {
         .updateGym(data.id, data.payload)
         .pipe(map(() => new UpdateGymSuccessAction()))
     ),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new UpdateGymFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new UpdateGymFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -157,7 +169,10 @@ export class GymEffect {
     map(([data, allReservations]) => {
       const result: number[] = [];
       allReservations.forEach((elem: UserModel) => {
-        if (elem.reservationDate === data.date && elem.gym === data.gymName) {
+        if (
+          elem.reservationDate === data.date &&
+          elem.gymName === data.gymName
+        ) {
           const from = elem.initialTime;
           let to = elem.endTime;
           while (to >= from) {
@@ -168,12 +183,14 @@ export class GymEffect {
       });
       return new ReservationLoadingForSelectedDateSuccessAction(result);
     }),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(
-        new ReservationLoadingForSelectedDateFailedAction(error)
-      );
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(
+          new ReservationLoadingForSelectedDateFailedAction(error)
+        );
+        return caught;
+      }
+    )
   );
   constructor(
     private storeUser$: Store<StateUser>,

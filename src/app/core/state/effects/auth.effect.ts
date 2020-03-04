@@ -3,7 +3,7 @@ import { AuthService } from '@src/app/core/services/auth-service/auth.service';
 import { User } from '@modules/auth/interfaces/user.interface';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store, Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import {
@@ -36,15 +36,15 @@ export class AuthEffects {
             localStorage.setItem('userEmail', authState.user.email);
             localStorage.setItem('userId', authState.user.uid);
             return new LogInSuccessAction({
-              user: localStorage.getItem('userToken') || '',
-              email: authState.user.email,
+              user: localStorage.getItem('userToken'),
               id: authState.user.uid
             });
           }),
-          catchError((error: Error, caught: Observable<Action>) => {
-            this.store$.dispatch(new LogInFailureAction(error));
-            return caught;
-          })
+          catchError(
+            (error: Error): Observable<Action> => {
+              return of(new LogInFailureAction(error));
+            }
+          )
         );
     })
   );
@@ -62,10 +62,12 @@ export class AuthEffects {
         })
       );
     }),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new LogoutFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new LogoutFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -97,15 +99,15 @@ export class AuthEffects {
           localStorage.setItem('userId', this.user.uid),
           localStorage.setItem('userEmail', this.user.email);
         return new SignUpSuccessAction({
-          email: localStorage.getItem('userEmail'),
           user: localStorage.getItem('userToken'),
           id: localStorage.getItem('userId')
         });
       }),
-      catchError((error: Error, caught: Observable<Action>) => {
-        this.store$.dispatch(new SignUpFailureAction(error));
-        return caught;
-      })
+      catchError(
+        (error: Error): Observable<Action> => {
+          return of(new LogInFailureAction(error));
+        }
+      )
     );
   constructor(
     private afAuth: AngularFireAuth,

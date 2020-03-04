@@ -38,8 +38,8 @@ export class AuthService {
               });
           })
       );
-    } catch (error) {
-      alert(error.message);
+    } catch (err) {
+      alert(err.message);
     }
   }
 

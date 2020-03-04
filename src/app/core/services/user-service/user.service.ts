@@ -43,7 +43,7 @@ export class UserService {
     email: string,
     paymentAmount: number,
     numberOfPeople: number,
-    gym: string
+    gymName: string
   ): Observable<DocumentReference> {
     try {
       let maximumNumberOfPeople: number;
@@ -65,7 +65,7 @@ export class UserService {
           email,
           paymentAmount,
           numberOfPeople,
-          gym
+          gymName
         })
       );
     } catch (err) {

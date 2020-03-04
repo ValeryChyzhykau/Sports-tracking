@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { adminNode, StateAdmin } from '../reducers/admin.reducers';
+import { AdminModel } from '@src/app/modules/home/interfaces/admin-model.interface';
 
 export const selectAdminStateFeature = createFeatureSelector<StateAdmin>(
   adminNode
@@ -31,7 +32,7 @@ export const selectPicture = createSelector(
 
 export const LoadedGymsEvents = createSelector(
   LoadedGymsFeature,
-  (state: StateAdmin): any => state.receivedGyms
+  (state: StateAdmin): AdminModel[] => state.receivedGyms
 );
 
 export const selectedId = createSelector(

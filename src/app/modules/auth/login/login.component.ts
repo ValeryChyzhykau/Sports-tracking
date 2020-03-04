@@ -20,7 +20,10 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
     try {
-      const { userEmail, userPassword } = this.loginForm.value;
+      const {
+        userEmail,
+        userPassword
+      }: { userEmail: string; userPassword: string } = this.loginForm.value;
       this.store$.dispatch(
         new LogInAction({ email: userEmail, password: userPassword })
       );
@@ -36,6 +39,12 @@ export class LoginComponent implements OnInit {
       userPhone,
       userLogin,
       userName
+    }: {
+      userEmail: string;
+      userPassword: string;
+      userPhone: number;
+      userLogin: string;
+      userName: string;
     } = this.signUpForm.value;
     this.store$.dispatch(
       new SignUpAction({
@@ -71,11 +80,3 @@ export class LoginComponent implements OnInit {
     this.isVisible = false;
   }
 }
-
-// public signUp(): void {
-//   const {userEmail, userName, userLogin, userPassword, userPhone} =  this.signUpForm.value;
-//   this.service.signUp(userEmail, userPassword, userName, userLogin, userPhone)
-//     .then(() => this.router.navigate(['/home']))
-//     .then(() => this.dialogRef.close())
-//     .catch(error => alert( error.message));
-// }

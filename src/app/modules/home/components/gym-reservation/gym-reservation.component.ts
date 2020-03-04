@@ -83,15 +83,14 @@ export class GymReservationComponent implements OnInit {
       initialTime,
       endTime,
       numberOfPeople
-    } = this.updateReservationForm.value;
+    }: UserModel = this.updateReservationForm.value;
+    endTime = endTime.getHours();
+    initialTime = initialTime.getHours();
     this.selectedUsersReservation$.subscribe((selected: UserModel) => {
-      console.log(selected);
       pricePerHour = selected.pricePerHour;
       id = selected.id;
       reservationDate = selected.reservationDate;
     });
-    endTime = endTime.getHours();
-    initialTime = initialTime.getHours();
     paymentAmount = pricePerHour * (endTime - initialTime);
     this.storeUser$.dispatch(
       new UpdateReservationAction(id, {

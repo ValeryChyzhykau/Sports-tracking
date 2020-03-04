@@ -28,7 +28,7 @@ export class LogInAction implements Action {
 export class LogInSuccessAction implements Action {
   public readonly type: AuthActionTypes.LoginSuccessAction =
     AuthActionTypes.LoginSuccessAction;
-  constructor(public payload: { id: string; user: string; email: string }) {}
+  constructor(public payload: { id: string; user: string }) {}
 }
 
 export class LogInFailureAction implements Action {
@@ -74,7 +74,7 @@ export class SignUpAction implements Action {
 export class SignUpSuccessAction implements Action {
   public readonly type: AuthActionTypes.SignUpSuccessAction =
     AuthActionTypes.SignUpSuccessAction;
-  constructor(public payload: { id: string; user: string; email: string }) {}
+  constructor(public payload: { id: string; user: string }) {}
 }
 
 export class SignUpFailureAction implements Action {

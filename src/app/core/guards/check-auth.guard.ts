@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../services/auth-service/auth.service';
@@ -9,11 +9,7 @@ import { AuthService } from '../services/auth-service/auth.service';
 })
 export class CheckAuthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {}
-  public canActivate():
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  public canActivate(): Observable<boolean> | boolean {
     const check = this.authService.checkStatus();
     return check.pipe(
       map((data: boolean) => {

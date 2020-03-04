@@ -47,14 +47,16 @@ export class ReservationEffect {
           data.payload.email,
           data.payload.paymentAmount,
           data.payload.numberOfPeople,
-          data.payload.gym
+          data.payload.gymName
         )
         .pipe(map(() => new CreateNewReservationSuccessAction()));
     }),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new CreateNewReservationFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new CreateNewReservationFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -67,10 +69,12 @@ export class ReservationEffect {
         })
       );
     }),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new RemoveReservationFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new RemoveReservationFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -85,7 +89,7 @@ export class ReservationEffect {
       allReservations.forEach((elem: UserModel) => {
         if (
           elem.reservationDate === data.reservationDate &&
-          elem.gym === data.gym &&
+          elem.gymName === data.gymName &&
           elem.email !== data.email
         ) {
           const from = elem.initialTime;
@@ -98,10 +102,12 @@ export class ReservationEffect {
       });
       return new GettingSelectedReservationSuccessAction(result);
     }),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new GettingSelectedReservationFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new GettingSelectedReservationFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -129,10 +135,12 @@ export class ReservationEffect {
           })
         )
     ),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new LoadReservationListFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new LoadReservationListFailedAction(error));
+        return caught;
+      }
+    )
   );
 
   @Effect()
@@ -143,10 +151,12 @@ export class ReservationEffect {
         .updateReservation(data.id, data.payload)
         .pipe(map(() => new UpdateReservationSuccessAction()))
     ),
-    catchError((error: Error, caught: Observable<Action>) => {
-      this.store$.dispatch(new UpdateReservationFailedAction(error));
-      return caught;
-    })
+    catchError(
+      (error: Error, caught: Observable<Action>): Observable<Action> => {
+        this.store$.dispatch(new UpdateReservationFailedAction(error));
+        return caught;
+      }
+    )
   );
   constructor(
     private actions$: Actions,

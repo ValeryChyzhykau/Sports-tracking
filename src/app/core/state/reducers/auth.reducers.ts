@@ -1,7 +1,6 @@
 import { AuthActionsUnion, AuthActionTypes } from '../actions/auth.actions';
 
 export interface AuthState {
-  email: string | null;
   user: string | null;
   id: string | null;
   errorMessage: string | null;
@@ -11,7 +10,6 @@ export const authState = 'authState';
 
 export const initialState: AuthState = {
   user: localStorage.getItem('userToken'),
-  email: localStorage.getItem('userEmail'),
   id: localStorage.getItem('userId'),
   errorMessage: null
 };
@@ -19,6 +17,7 @@ export const authInformation = (
   state = initialState,
   action: AuthActionsUnion
 ): AuthState => {
+  console.log(state, action);
   switch (action.type) {
     case AuthActionTypes.LoginSuccessAction: {
       return {
